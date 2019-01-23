@@ -44,7 +44,7 @@
 - [ ] New API
 - [ ] Existing API, New Endpoint
 
-- [ ] **I have update the README.md**
+- [ ] **I have updated the README.md**
 
 ----
 #### Tech Changes
@@ -53,4 +53,4 @@
 - [ ] New Testing Library
 - [ ] New Debugging Tool
 
-- [ ] **I have update the README.md**
+- [ ] **I have updated the README.md**
