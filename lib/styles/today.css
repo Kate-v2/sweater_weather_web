@@ -1,0 +1,13 @@
+#today {
+  padding: 3%;
+  background: lightgrey;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.today {
+  padding: 10%;
+}
