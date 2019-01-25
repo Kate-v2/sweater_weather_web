@@ -3,7 +3,7 @@
 An app to view 7-day forecasts at any USA city.
 Register to be able to store favorite locations for quick forecast access!
 
-* Deployed App
+* [Deployed App](https://kate-v2.github.io/sweater_weather_web/)
 * [Deployed API](https://sweater-weather-api-app.herokuapp.com/)
 * [API Repo](https://github.com/Kate-v2/sweater_weather)
 
@@ -29,7 +29,7 @@ To contribute, see the setup instructions.
 * [Open Issues](https://github.com/Kate-v2/sweater_weather_web/projects/1)
 * Create a new branch describing the feature. If your close an issue, include it in the branch name.
 * Please describe all changes in the Pull Request (to `Master`), and all relative issue cards/actions.
-* Please use the Pull Request Template as the baseline for communication - feel free to add more! 
+* Please use the Pull Request Template as the baseline for communication - feel free to add more!
 * Please update the `README` if anything is affected.
 * Deployment is not from the Master branch, but rather the `gh-pages` branch.
 
