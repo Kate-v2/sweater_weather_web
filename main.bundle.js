@@ -42,16 +42,24 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	var _dom_tools = __webpack_require__(1);
+
+	var _dom_tools2 = _interopRequireDefault(_dom_tools);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var tool = new _dom_tools2.default();
 
 	var session = false;
 
 	loadNav();
 
 	function loadNav() {
-	  var nav = byId('navBar');
+	  var nav = tool.byId('navBar');
 	  clearHTML(nav);
 	  addSearchBar(nav);
 	  session ? addFavoritesButton(nav) : addRegisterButton(nav);
@@ -61,7 +69,7 @@
 	// ---- Session ----
 
 	function registerUser() {
-	  var content = byId('content');
+	  var content = tool.byId('content');
 	  clearHTML(content);
 	  registerForm(content);
 	}
@@ -98,9 +106,9 @@
 	    'verb': 'POST',
 	    'url': 'https://sweater-weather-api-app.herokuapp.com/api/v1/users',
 	    'body': {
-	      'email': byId('emailField').value,
-	      'password': byId('passwordField').value,
-	      'password_confirmation': byId('confirmField').value
+	      'email': tool.byId('emailField').value,
+	      'password': tool.byId('passwordField').value,
+	      'password_confirmation': tool.byId('confirmField').value
 	    },
 	    'display': 'register'
 	  };
@@ -133,23 +141,19 @@
 	}
 
 	function badCredentials() {
-	  var feedback = byId('feedback');
+	  var feedback = tool.byId('feedback');
 	  clearHTML(feedback);
 	  var msg = "Sorry, something went wrong.";
 	  appendText(feedback, msg);
 	}
 
 	function assessPost(data, display) {
-	  // if (display == 'register') { newSession(data, true) }
 	  if (display == 'register' || display == 'login') {
 	    newSession(data);
 	  }
-	  // if (display == 'login')    { newSession(data) }
 	}
 
-	// function newSession(data, isNewUser=false) {
 	function newSession(data) {
-	  // if (isNewUser) { thankForJoining() }
 	  var key = data['data']['attributes']['api_key'];
 	  sessionStorage.setItem('api_key', key);
 	  session = true;
@@ -158,18 +162,13 @@
 	}
 
 	function nowLoggedIn() {
-	  var feedback = byId('feedback');
+	  var feedback = tool.byId('feedback');
 	  clearHTML(feedback);
 	  var msg = "You're now logged in, please explore and add favorite locations!";
 	  appendText(feedback, msg);
-	  var content = byId('content');
+	  var content = tool.byId('content');
 	  clearHTML(content);
 	}
-
-	// function thankForJoining() {
-	//   let msg = "Thanks for joining, you're now logged in!"
-	//   alert(msg)
-	// }
 
 	function clearSession() {
 	  sessionStorage.setItem('api_key', null);
@@ -178,7 +177,7 @@
 	}
 
 	function loginUserForm() {
-	  var content = byId('content');
+	  var content = tool.byId('content');
 	  clearHTML(content);
 
 	  var form = addSpan(content, 'loginFrom', null);
@@ -203,8 +202,8 @@
 	    'verb': 'POST',
 	    'url': 'https://sweater-weather-api-app.herokuapp.com/api/v1/sessions',
 	    'body': {
-	      'email': byId('emailField').value,
-	      'password': byId('passwordField').value
+	      'email': tool.byId('emailField').value,
+	      'password': tool.byId('passwordField').value
 	    },
 	    'display': 'login'
 	  };
@@ -216,7 +215,7 @@
 	function getForecast() {
 	  var city = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-	  var location = city ? city : byId('navSearch').value;
+	  var location = city ? city : tool.byId('navSearch').value;
 	  var obj = {
 	    'verb': 'GET',
 	    'url': 'https://sweater-weather-api-app.herokuapp.com/api/v1/forecasts?location=',
@@ -228,7 +227,7 @@
 
 	function displayForecast(data) {
 
-	  clearValue(byId('navSearch'));
+	  clearValue(tool.byId('navSearch'));
 
 	  var info = data['data']['attributes'];
 
@@ -249,7 +248,7 @@
 	    'time': current['time']
 	  };
 
-	  var content = byId('content');
+	  var content = tool.byId('content');
 
 	  var overview = addDiv(content, 'overview', null);
 
@@ -314,7 +313,7 @@
 	}
 
 	function badLocation() {
-	  var feedback = byId('feedback');
+	  var feedback = tool.byId('feedback');
 	  clearHTML(feedback);
 	  var msg = "Sorry, that location does not exist. Check spelling or try another location.";
 	  appendText(feedback, msg);
@@ -333,7 +332,7 @@
 	function addSearchBar(nav) {
 	  var field = makeInput('text', 'navSearch', 'nav_element');
 	  nav.appendChild(field);
-	  field = byId('navSearch');
+	  field = tool.byId('navSearch');
 	  field.placeholder = "Search for a US City";
 	  addSearchSubmit(nav);
 	}
@@ -341,7 +340,7 @@
 	function addSearchSubmit(nav) {
 	  var submit = makeInput('submit', 'navSearchButton', 'nav_element');
 	  nav.appendChild(submit);
-	  submit = byId('navSearchButton');
+	  submit = tool.byId('navSearchButton');
 	  submit.addEventListener('click', function () {
 	    getForecast();
 	  });
@@ -464,12 +463,36 @@
 	  return field;
 	}
 
-	// ---- TOOLS ----
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
 
+	"use strict";
 
-	function byId(id) {
-	  return document.getElementById(id);
-	}
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var DOMTools = function () {
+	  function DOMTools() {
+	    _classCallCheck(this, DOMTools);
+	  }
+
+	  _createClass(DOMTools, [{
+	    key: "byId",
+	    value: function byId(id) {
+	      return document.getElementById(id);
+	    }
+	  }]);
+
+	  return DOMTools;
+	}();
+
+	exports.default = DOMTools;
 
 /***/ })
 /******/ ]);
