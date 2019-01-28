@@ -42,17 +42,25 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
+
+	var _dom_tools = __webpack_require__(1);
+
+	var _dom_tools2 = _interopRequireDefault(_dom_tools);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var tool = new _dom_tools2.default();
 
 	var session = false;
 
 	loadNav();
 
 	function loadNav() {
-	  var nav = byId('navBar');
-	  clearHTML(nav);
+	  var nav = tool.byId('navBar');
+	  tool.clearHTML(nav);
 	  addSearchBar(nav);
 	  session ? addFavoritesButton(nav) : addRegisterButton(nav);
 	  addSessionButton(nav); // TO DO - make this two buttons like above, SRP the function
@@ -61,35 +69,35 @@
 	// ---- Session ----
 
 	function registerUser() {
-	  var content = byId('content');
-	  clearHTML(content);
+	  var content = tool.byId('content');
+	  tool.clearHTML(content);
 	  registerForm(content);
 	}
 
 	function registerForm(element) {
-	  var form = addSpan(content, 'registerFrom', null);
+	  var form = tool.addSpan(content, 'registerFrom', null);
 
 	  // TO DO - break email, password, submit into functions to be reused with login
 
-	  var email = addDiv(form, 'email', 'row');
-	  var title = addSpan(email, null, 'title');
+	  var email = tool.addDiv(form, 'email', 'row');
+	  var title = tool.addSpan(email, null, 'title');
 	  appendText(title, "Email");
-	  var field = addSpan(email, 'email', 'field');
+	  var field = tool.addSpan(email, 'email', 'field');
 	  field.appendChild(makeInput('text', 'emailField', null));
 
-	  var password = addDiv(form, 'password', 'row');
-	  title = addSpan(password, null, 'title');
+	  var password = tool.addDiv(form, 'password', 'row');
+	  title = tool.addSpan(password, null, 'title');
 	  appendText(title, "Password");
-	  field = addSpan(password, 'password', 'field');
+	  field = tool.addSpan(password, 'password', 'field');
 	  field.appendChild(makeInput('password', 'passwordField', null));
 
-	  var confirm = addDiv(form, 'confrim', 'row');
-	  title = addSpan(confirm, null, 'title');
+	  var confirm = tool.addDiv(form, 'confrim', 'row');
+	  title = tool.addSpan(confirm, null, 'title');
 	  appendText(title, "Confirm Password");
-	  field = addSpan(confirm, 'confirm', 'field');
+	  field = tool.addSpan(confirm, 'confirm', 'field');
 	  field.appendChild(makeInput('password', 'confirmField', null));
 
-	  var submit = addDiv(form, 'submit', 'row');
+	  var submit = tool.addDiv(form, 'submit', 'row');
 	  addRegisterSubmit(submit);
 	}
 
@@ -98,9 +106,9 @@
 	    'verb': 'POST',
 	    'url': 'https://sweater-weather-api-app.herokuapp.com/api/v1/users',
 	    'body': {
-	      'email': byId('emailField').value,
-	      'password': byId('passwordField').value,
-	      'password_confirmation': byId('confirmField').value
+	      'email': tool.byId('emailField').value,
+	      'password': tool.byId('passwordField').value,
+	      'password_confirmation': tool.byId('confirmField').value
 	    },
 	    'display': 'register'
 	  };
@@ -133,23 +141,19 @@
 	}
 
 	function badCredentials() {
-	  var feedback = byId('feedback');
-	  clearHTML(feedback);
+	  var feedback = tool.byId('feedback');
+	  tool.clearHTML(feedback);
 	  var msg = "Sorry, something went wrong.";
 	  appendText(feedback, msg);
 	}
 
 	function assessPost(data, display) {
-	  // if (display == 'register') { newSession(data, true) }
 	  if (display == 'register' || display == 'login') {
 	    newSession(data);
 	  }
-	  // if (display == 'login')    { newSession(data) }
 	}
 
-	// function newSession(data, isNewUser=false) {
 	function newSession(data) {
-	  // if (isNewUser) { thankForJoining() }
 	  var key = data['data']['attributes']['api_key'];
 	  sessionStorage.setItem('api_key', key);
 	  session = true;
@@ -158,18 +162,13 @@
 	}
 
 	function nowLoggedIn() {
-	  var feedback = byId('feedback');
-	  clearHTML(feedback);
+	  var feedback = tool.byId('feedback');
+	  tool.clearHTML(feedback);
 	  var msg = "You're now logged in, please explore and add favorite locations!";
 	  appendText(feedback, msg);
-	  var content = byId('content');
-	  clearHTML(content);
+	  var content = tool.byId('content');
+	  tool.clearHTML(content);
 	}
-
-	// function thankForJoining() {
-	//   let msg = "Thanks for joining, you're now logged in!"
-	//   alert(msg)
-	// }
 
 	function clearSession() {
 	  sessionStorage.setItem('api_key', null);
@@ -178,23 +177,23 @@
 	}
 
 	function loginUserForm() {
-	  var content = byId('content');
-	  clearHTML(content);
+	  var content = tool.byId('content');
+	  tool.clearHTML(content);
 
-	  var form = addSpan(content, 'loginFrom', null);
-	  var email = addDiv(form, 'email', 'row');
-	  var title = addSpan(email, null, 'title');
+	  var form = tool.addSpan(content, 'loginFrom', null);
+	  var email = tool.addDiv(form, 'email', 'row');
+	  var title = tool.addSpan(email, null, 'title');
 	  appendText(title, "Email");
-	  var field = addSpan(email, 'email', 'field');
+	  var field = tool.addSpan(email, 'email', 'field');
 	  field.appendChild(makeInput('text', 'emailField', null));
 
-	  var password = addDiv(form, 'password', 'row');
-	  title = addSpan(password, null, 'title');
+	  var password = tool.addDiv(form, 'password', 'row');
+	  title = tool.addSpan(password, null, 'title');
 	  appendText(title, "Password");
-	  field = addSpan(password, 'password', 'field');
+	  field = tool.addSpan(password, 'password', 'field');
 	  field.appendChild(makeInput('password', 'passwordField', null));
 
-	  var submit = addDiv(form, 'submit', 'row');
+	  var submit = tool.addDiv(form, 'submit', 'row');
 	  addLoginSubmit(submit);
 	}
 
@@ -203,8 +202,8 @@
 	    'verb': 'POST',
 	    'url': 'https://sweater-weather-api-app.herokuapp.com/api/v1/sessions',
 	    'body': {
-	      'email': byId('emailField').value,
-	      'password': byId('passwordField').value
+	      'email': tool.byId('emailField').value,
+	      'password': tool.byId('passwordField').value
 	    },
 	    'display': 'login'
 	  };
@@ -216,7 +215,7 @@
 	function getForecast() {
 	  var city = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-	  var location = city ? city : byId('navSearch').value;
+	  var location = city ? city : tool.byId('navSearch').value;
 	  var obj = {
 	    'verb': 'GET',
 	    'url': 'https://sweater-weather-api-app.herokuapp.com/api/v1/forecasts?location=',
@@ -228,7 +227,7 @@
 
 	function displayForecast(data) {
 
-	  clearValue(byId('navSearch'));
+	  tool.clearValue(tool.byId('navSearch'));
 
 	  var info = data['data']['attributes'];
 
@@ -249,9 +248,9 @@
 	    'time': current['time']
 	  };
 
-	  var content = byId('content');
+	  var content = tool.byId('content');
 
-	  var overview = addDiv(content, 'overview', null);
+	  var overview = tool.addDiv(content, 'overview', null);
 
 	  displayToday(showToday, overview);
 	}
@@ -261,31 +260,31 @@
 	  var cityState = data['city'] + ', ' + data['state'];
 	  var highLow = "High: " + data['high'] + " Low: " + data['low'];
 
-	  var showToday = addDiv(element, 'today', 'overview');
+	  var showToday = tool.addDiv(element, 'today', 'overview');
 
-	  var today1 = addSpan(showToday, 'today1_temp', 'today');
-	  var today1_1 = addDiv(today1, 'today1_1', 'today1');
-	  var today1_gif = addSpan(today1_1, 'today1_gif', 'today1_1');
+	  var today1 = tool.addSpan(showToday, 'today1_temp', 'today');
+	  var today1_1 = tool.addDiv(today1, 'today1_1', 'today1');
+	  var today1_gif = tool.addSpan(today1_1, 'today1_gif', 'today1_1');
 	  appendText(today1_gif, "IMG"); // TO DO - add gif image
-	  var today1_desc = addSpan(today1_1, 'today1_desc', 'today1_1');
+	  var today1_desc = tool.addSpan(today1_1, 'today1_desc', 'today1_1');
 	  appendText(today1_desc, data['desc']);
-	  var today1_2 = addDiv(today1, 'today1_2', 'today1');
+	  var today1_2 = tool.addDiv(today1, 'today1_2', 'today1');
 	  appendText(today1_2, data['temp']);
-	  var today1_3 = addDiv(today1, 'today1_3', 'today1');
+	  var today1_3 = tool.addDiv(today1, 'today1_3', 'today1');
 	  appendText(today1_3, highLow);
 
-	  var today2 = addSpan(showToday, 'today2_location', 'today');
-	  var today2_1 = addDiv(today2, 'today2_1', 'today2');
+	  var today2 = tool.addSpan(showToday, 'today2_location', 'today');
+	  var today2_1 = tool.addDiv(today2, 'today2_1', 'today2');
 	  appendText(today2_1, cityState);
-	  var today2_2 = addDiv(today2, 'today2_2', 'today2');
+	  var today2_2 = tool.addDiv(today2, 'today2_2', 'today2');
 	  appendText(today2_2, data['country']);
-	  var today2_3 = addDiv(today2, 'today2_3', 'today2');
+	  var today2_3 = tool.addDiv(today2, 'today2_3', 'today2');
 	  appendText(today2_3, data['time']);
 
-	  var today3 = addSpan(showToday, 'today2_location', 'today');
-	  var today3_1 = addDiv(today3, 'today3_1', 'today3');
+	  var today3 = tool.addSpan(showToday, 'today2_location', 'today');
+	  var today3_1 = tool.addDiv(today3, 'today3_1', 'today3');
 	  appendText(today3_1, "Change Location");
-	  var today3_2 = addDiv(today3, 'today3_2', 'today3');
+	  var today3_2 = tool.addDiv(today3, 'today3_2', 'today3');
 	  appendText(today3_2, "Add to Favorites");
 	}
 
@@ -314,8 +313,8 @@
 	}
 
 	function badLocation() {
-	  var feedback = byId('feedback');
-	  clearHTML(feedback);
+	  var feedback = tool.byId('feedback');
+	  tool.clearHTML(feedback);
 	  var msg = "Sorry, that location does not exist. Check spelling or try another location.";
 	  appendText(feedback, msg);
 	  // TO DO - grab all location search bars & clear them
@@ -333,7 +332,7 @@
 	function addSearchBar(nav) {
 	  var field = makeInput('text', 'navSearch', 'nav_element');
 	  nav.appendChild(field);
-	  field = byId('navSearch');
+	  field = tool.byId('navSearch');
 	  field.placeholder = "Search for a US City";
 	  addSearchSubmit(nav);
 	}
@@ -341,7 +340,7 @@
 	function addSearchSubmit(nav) {
 	  var submit = makeInput('submit', 'navSearchButton', 'nav_element');
 	  nav.appendChild(submit);
-	  submit = byId('navSearchButton');
+	  submit = tool.byId('navSearchButton');
 	  submit.addEventListener('click', function () {
 	    getForecast();
 	  });
@@ -392,44 +391,6 @@
 
 	// ---- General HTML Elements ----
 
-	function clearHTML(element) {
-	  element.innerHTML = '';
-	}
-
-	function clearValue(element) {
-	  element.value = '';
-	}
-
-	function addDiv(element) {
-	  var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-	  var className = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-	  var div = document.createElement('div');
-	  if (id) {
-	    div.id = id;
-	  }
-	  if (className) {
-	    div.className = className;
-	  }
-	  element.appendChild(div);
-	  return div;
-	}
-
-	function addSpan(element) {
-	  var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-	  var className = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-	  var span = document.createElement('span');
-	  if (id) {
-	    span.id = id;
-	  }
-	  if (className) {
-	    span.className = className;
-	  }
-	  element.appendChild(span);
-	  return span;
-	}
-
 	function makeNavButton(id, text) {
 	  var button = navSpan();
 	  button.id = id;
@@ -464,12 +425,78 @@
 	  return field;
 	}
 
-	// ---- TOOLS ----
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
 
+	'use strict';
 
-	function byId(id) {
-	  return document.getElementById(id);
-	}
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var DOMTools = function () {
+	  function DOMTools() {
+	    _classCallCheck(this, DOMTools);
+	  }
+
+	  _createClass(DOMTools, [{
+	    key: 'byId',
+	    value: function byId(id) {
+	      return document.getElementById(id);
+	    }
+	  }, {
+	    key: 'clearHTML',
+	    value: function clearHTML(element) {
+	      element.innerHTML = '';
+	    }
+	  }, {
+	    key: 'clearValue',
+	    value: function clearValue(element) {
+	      element.value = '';
+	    }
+	  }, {
+	    key: 'addDiv',
+	    value: function addDiv(element) {
+	      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+	      var className = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+	      var div = document.createElement('div');
+	      if (id) {
+	        div.id = id;
+	      }
+	      if (className) {
+	        div.className = className;
+	      }
+	      element.appendChild(div);
+	      return div;
+	    }
+	  }, {
+	    key: 'addSpan',
+	    value: function addSpan(element) {
+	      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+	      var className = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+	      var span = document.createElement('span');
+	      if (id) {
+	        span.id = id;
+	      }
+	      if (className) {
+	        span.className = className;
+	      }
+	      element.appendChild(span);
+	      return span;
+	    }
+	  }]);
+
+	  return DOMTools;
+	}();
+
+	exports.default = DOMTools;
 
 /***/ })
 /******/ ]);
