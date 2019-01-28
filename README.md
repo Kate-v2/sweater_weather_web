@@ -33,6 +33,11 @@ To contribute, see the setup instructions.
 * Please update the `README` if anything is affected.
 * Deployment is not from the Master branch, but rather the `gh-pages` branch.
 
+### Core Unfinished Features
+- [ ] User can add favorite locations
+- [ ] User can see all favorite locations
+- [ ] User can remove a favorite location
+
 ## Core Contributors
 [Kate](https://github.com/Kate-v2)
 
