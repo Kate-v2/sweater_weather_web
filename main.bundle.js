@@ -81,28 +81,36 @@
 	function registerForm(element) {
 	  var form = tool.addSpan(content, 'registerForm', null);
 
-	  // TO DO - break email, password, submit into functions to be reused with login
+	  emailField(form);
+	  passwordField(form);
+	  passwordFieldConfirmation(form);
 
+	  var submit = tool.addDiv(form, 'submit', 'row');
+	  addRegisterSubmit(submit);
+	}
+
+	function emailField(form) {
 	  var email = tool.addDiv(form, 'email', 'row');
 	  var title = tool.addSpan(email, null, 'title');
 	  appendText(title, "Email");
 	  var field = tool.addSpan(email, 'email', 'field');
 	  field.appendChild(makeInput('text', 'emailField', null));
+	}
 
+	function passwordField(form) {
 	  var password = tool.addDiv(form, 'password', 'row');
-	  title = tool.addSpan(password, null, 'title');
+	  var title = tool.addSpan(password, null, 'title');
 	  appendText(title, "Password");
-	  field = tool.addSpan(password, 'password', 'field');
+	  var field = tool.addSpan(password, 'password', 'field');
 	  field.appendChild(makeInput('password', 'passwordField', null));
+	}
 
+	function passwordFieldConfirmation(form) {
 	  var confirm = tool.addDiv(form, 'confrim', 'row');
-	  title = tool.addSpan(confirm, null, 'title');
+	  var title = tool.addSpan(confirm, null, 'title');
 	  appendText(title, "Confirm Password");
-	  field = tool.addSpan(confirm, 'confirm', 'field');
+	  var field = tool.addSpan(confirm, 'confirm', 'field');
 	  field.appendChild(makeInput('password', 'confirmField', null));
-
-	  var submit = tool.addDiv(form, 'submit', 'row');
-	  addRegisterSubmit(submit);
 	}
 
 	function makeUser() {
@@ -190,17 +198,8 @@
 	  tool.clearHTML(feedback);
 
 	  var form = tool.addSpan(content, 'loginForm', null);
-	  var email = tool.addDiv(form, 'email', 'row');
-	  var title = tool.addSpan(email, null, 'title');
-	  appendText(title, "Email");
-	  var field = tool.addSpan(email, 'email', 'field');
-	  field.appendChild(makeInput('text', 'emailField', null));
-
-	  var password = tool.addDiv(form, 'password', 'row');
-	  title = tool.addSpan(password, null, 'title');
-	  appendText(title, "Password");
-	  field = tool.addSpan(password, 'password', 'field');
-	  field.appendChild(makeInput('password', 'passwordField', null));
+	  emailField(form);
+	  passwordField(form);
 
 	  var submit = tool.addDiv(form, 'submit', 'row');
 	  addLoginSubmit(submit);
