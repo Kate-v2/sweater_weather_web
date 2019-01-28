@@ -111,6 +111,7 @@
 	  var verb = obj['verb'];
 	  var url = obj['url'];
 	  var body = obj['body'];
+	  var display = obj['display'];
 
 	  var data;
 	  var req = new XMLHttpRequest();
@@ -122,7 +123,7 @@
 	    var valid = stat >= 200 && stat < 300;
 	    if (valid) {
 	      data = JSON.parse(this.responseText);
-	      assessPost(data, obj['display']);
+	      assessPost(data, display);
 	    } else {
 	      badCredentials();
 	    }
@@ -139,30 +140,36 @@
 	}
 
 	function assessPost(data, display) {
-	  if (display == 'register') {
-	    newSession(data, true);
-	  }
-	  if (display == 'login') {
+	  // if (display == 'register') { newSession(data, true) }
+	  if (display == 'register' || display == 'login') {
 	    newSession(data);
 	  }
+	  // if (display == 'login')    { newSession(data) }
 	}
 
+	// function newSession(data, isNewUser=false) {
 	function newSession(data) {
-	  var isNewUser = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-	  if (isNewUser) {
-	    thankForJoining();
-	  }
+	  // if (isNewUser) { thankForJoining() }
 	  var key = data['data']['attributes']['api_key'];
 	  sessionStorage.setItem('api_key', key);
 	  session = true;
 	  loadNav();
+	  nowLoggedIn();
 	}
 
-	function thankForJoining() {
-	  var msg = "Thanks for joining, you're now logged in!";
-	  alert(msg);
+	function nowLoggedIn() {
+	  var feedback = byId('feedback');
+	  clearHTML(feedback);
+	  var msg = "You're now logged in, please explore and add favorite locations!";
+	  appendText(feedback, msg);
+	  var content = byId('content');
+	  clearHTML(content);
 	}
+
+	// function thankForJoining() {
+	//   let msg = "Thanks for joining, you're now logged in!"
+	//   alert(msg)
+	// }
 
 	function clearSession() {
 	  sessionStorage.setItem('api_key', null);
