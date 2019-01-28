@@ -77,19 +77,17 @@
 	  var field = addSpan(email, 'email', 'field');
 	  field.appendChild(makeInput('text', 'emailField', null));
 
-	  // TO DO - add characters as private attribute
 	  var password = addDiv(form, 'password', 'row');
 	  title = addSpan(password, null, 'title');
 	  appendText(title, "Password");
 	  field = addSpan(password, 'password', 'field');
-	  field.appendChild(makeInput('text', 'passwordField', null));
+	  field.appendChild(makeInput('password', 'passwordField', null));
 
-	  // TO DO - add characters as private attribute
 	  var confirm = addDiv(form, 'confrim', 'row');
 	  title = addSpan(confirm, null, 'title');
 	  appendText(title, "Confirm Password");
 	  field = addSpan(confirm, 'confirm', 'field');
-	  field.appendChild(makeInput('text', 'confirmField', null));
+	  field.appendChild(makeInput('password', 'confirmField', null));
 
 	  var submit = addDiv(form, 'submit', 'row');
 	  addRegisterSubmit(submit);
@@ -113,6 +111,7 @@
 	  var verb = obj['verb'];
 	  var url = obj['url'];
 	  var body = obj['body'];
+	  var display = obj['display'];
 
 	  var data;
 	  var req = new XMLHttpRequest();
@@ -124,7 +123,7 @@
 	    var valid = stat >= 200 && stat < 300;
 	    if (valid) {
 	      data = JSON.parse(this.responseText);
-	      assessPost(data, obj['display']);
+	      assessPost(data, display);
 	    } else {
 	      badCredentials();
 	    }
@@ -141,32 +140,36 @@
 	}
 
 	function assessPost(data, display) {
-	  debugger;
-	  if (display == 'register') {
-	    newSession(data, true);
-	  }
-	  if (display == 'login') {
+	  // if (display == 'register') { newSession(data, true) }
+	  if (display == 'register' || display == 'login') {
 	    newSession(data);
 	  }
+	  // if (display == 'login')    { newSession(data) }
 	}
 
+	// function newSession(data, isNewUser=false) {
 	function newSession(data) {
-	  var isNewUser = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-	  if (isNewUser) {
-	    thankForJoining();
-	  }
+	  // if (isNewUser) { thankForJoining() }
 	  var key = data['data']['attributes']['api_key'];
 	  sessionStorage.setItem('api_key', key);
 	  session = true;
 	  loadNav();
-	  debugger;
+	  nowLoggedIn();
 	}
 
-	function thankForJoining() {
-	  var msg = "Thanks for joining, you're now logged in!";
-	  alert(msg);
+	function nowLoggedIn() {
+	  var feedback = byId('feedback');
+	  clearHTML(feedback);
+	  var msg = "You're now logged in, please explore and add favorite locations!";
+	  appendText(feedback, msg);
+	  var content = byId('content');
+	  clearHTML(content);
 	}
+
+	// function thankForJoining() {
+	//   let msg = "Thanks for joining, you're now logged in!"
+	//   alert(msg)
+	// }
 
 	function clearSession() {
 	  sessionStorage.setItem('api_key', null);
@@ -185,12 +188,11 @@
 	  var field = addSpan(email, 'email', 'field');
 	  field.appendChild(makeInput('text', 'emailField', null));
 
-	  // TO DO - add characters as private attribute
 	  var password = addDiv(form, 'password', 'row');
 	  title = addSpan(password, null, 'title');
 	  appendText(title, "Password");
 	  field = addSpan(password, 'password', 'field');
-	  field.appendChild(makeInput('text', 'passwordField', null));
+	  field.appendChild(makeInput('password', 'passwordField', null));
 
 	  var submit = addDiv(form, 'submit', 'row');
 	  addLoginSubmit(submit);
