@@ -21,6 +21,7 @@ A user can register/login and will have the ability to save forecast locations t
 Overall, this is a simple forecast app that can be expanded for your purposes.
 
 ## Known Issues
+* CSS is not quite finished
 
 ## Running Tests
 
