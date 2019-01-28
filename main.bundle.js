@@ -50,11 +50,17 @@
 
 	var _dom_tools2 = _interopRequireDefault(_dom_tools);
 
+	var _user_session = __webpack_require__(2);
+
+	var _user_session2 = _interopRequireDefault(_user_session);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var tool = new _dom_tools2.default();
 
-	var session = false;
+	var sesh = new _user_session2.default();
+
+	// var session = false
 
 	loadNav();
 
@@ -62,153 +68,154 @@
 	  var nav = tool.byId('navBar');
 	  tool.clearHTML(nav);
 	  addSearchBar(nav);
+	  // debugger
+	  var session = assessSession();
 	  session ? addFavoritesButton(nav) : addRegisterButton(nav);
 	  addSessionButton(nav); // TO DO - make this two buttons like above, SRP the function
 	}
 
 	// ---- Session ----
 
-	function registerUser() {
-	  var content = tool.byId('content');
-	  tool.clearHTML(content);
-	  registerForm(content);
-	}
+	// function sesh.registerUser() {
+	//   let content = tool.byId('content')
+	//   tool.clearHTML(content)
+	//   registerForm(content)
+	// }
 
-	function registerForm(element) {
-	  var form = tool.addSpan(content, 'registerFrom', null);
+	// function registerForm(element) {
+	//   let form = tool.addSpan(content, 'registerFrom', null)
+	//
+	//   // TO DO - break email, password, submit into functions to be reused with login
+	//
+	//   let email = tool.addDiv(form, 'email', 'row' )
+	//     let title = tool.addSpan(email, null, 'title')
+	//     appendText(title, "Email")
+	//     let field = tool.addSpan(email, 'email', 'field')
+	//     field.appendChild( tool.makeInput('text', 'emailField', null) )
+	//
+	//   let password = tool.addDiv(form, 'password', 'row' )
+	//     title = tool.addSpan(password, null, 'title')
+	//     appendText(title, "Password")
+	//     field = tool.addSpan(password, 'password', 'field')
+	//     field.appendChild( tool.makeInput('password', 'passwordField', null) )
+	//
+	//   let confirm = tool.addDiv(form, 'confrim', 'row' )
+	//     title = tool.addSpan(confirm, null, 'title')
+	//     appendText(title, "Confirm Password")
+	//     field = tool.addSpan(confirm, 'confirm', 'field')
+	//     field.appendChild( tool.makeInput('password', 'confirmField', null) )
+	//
+	//   let submit = tool.addDiv(form, 'submit', 'row')
+	//     addRegisterSubmit(submit)
+	// }
 
-	  // TO DO - break email, password, submit into functions to be reused with login
+	// function makeUser() {
+	//   let cred = {
+	//     'verb': 'POST',
+	//     'url': 'https://sweater-weather-api-app.herokuapp.com/api/v1/users',
+	//     'body': {
+	//               'email':                  tool.byId('emailField').value,
+	//               'password':               tool.byId('passwordField').value,
+	//               'password_confirmation':  tool.byId('confirmField').value
+	//             },
+	//     'display': 'register'
+	//   }
+	//   makePostRequest(cred)
+	// }
 
-	  var email = tool.addDiv(form, 'email', 'row');
-	  var title = tool.addSpan(email, null, 'title');
-	  appendText(title, "Email");
-	  var field = tool.addSpan(email, 'email', 'field');
-	  field.appendChild(makeInput('text', 'emailField', null));
+	// function makePostRequest(obj) {
+	//   let verb    = obj['verb']
+	//   let url     = obj['url']
+	//   let body    = obj['body']
+	//   let display = obj['display']
+	//
+	//   var data
+	//   let req = new XMLHttpRequest()
+	//   req.open(verb, url)
+	//   req.setRequestHeader("CCONTENT_TYPE", "application/json")
+	//   req.setRequestHeader("ACCEPT",        "application/json")
+	//   req.onload = function() {
+	//     let stat = this.status
+	//     let valid = ( stat >= 200 && stat < 300 )
+	//     if( valid ) {
+	//       data = JSON.parse(this.responseText)
+	//       assessPost(data, display)
+	//     }
+	//     else { badCredentials() }
+	//   }
+	//   var blob = new Blob([ JSON.stringify(body)], {type : 'application/json'});
+	//   req.send( blob )
+	// }
 
-	  var password = tool.addDiv(form, 'password', 'row');
-	  title = tool.addSpan(password, null, 'title');
-	  appendText(title, "Password");
-	  field = tool.addSpan(password, 'password', 'field');
-	  field.appendChild(makeInput('password', 'passwordField', null));
+	// function badCredentials() {
+	//   let feedback = tool.byId('feedback')
+	//   tool.clearHTML(feedback)
+	//   let msg = "Sorry, something went wrong."
+	//   appendText(feedback, msg)
+	// }
 
-	  var confirm = tool.addDiv(form, 'confrim', 'row');
-	  title = tool.addSpan(confirm, null, 'title');
-	  appendText(title, "Confirm Password");
-	  field = tool.addSpan(confirm, 'confirm', 'field');
-	  field.appendChild(makeInput('password', 'confirmField', null));
+	// function assessPost(data, display) {
+	//   if (display == 'register' || display == 'login') { newSession(data) }
+	// }
 
-	  var submit = tool.addDiv(form, 'submit', 'row');
-	  addRegisterSubmit(submit);
-	}
+	// function newSession(data) {
+	//   let key = data['data']['attributes']['api_key']
+	//   sessionStorage.setItem('api_key', key)
+	//   session = true
+	//   loadNav()
+	//   nowLoggedIn()
+	// }
 
-	function makeUser() {
-	  var cred = {
-	    'verb': 'POST',
-	    'url': 'https://sweater-weather-api-app.herokuapp.com/api/v1/users',
-	    'body': {
-	      'email': tool.byId('emailField').value,
-	      'password': tool.byId('passwordField').value,
-	      'password_confirmation': tool.byId('confirmField').value
-	    },
-	    'display': 'register'
-	  };
-	  makePostRequest(cred);
-	}
+	// function nowLoggedIn() {
+	//   let feedback = tool.byId('feedback')
+	//   tool.clearHTML(feedback)
+	//   let msg = "You're now logged in, please explore and add favorite locations!"
+	//   appendText(feedback, msg)
+	//   let content = tool.byId('content')
+	//   tool.clearHTML(content)
+	// }
 
-	function makePostRequest(obj) {
-	  var verb = obj['verb'];
-	  var url = obj['url'];
-	  var body = obj['body'];
-	  var display = obj['display'];
 
-	  var data;
-	  var req = new XMLHttpRequest();
-	  req.open(verb, url);
-	  req.setRequestHeader("CCONTENT_TYPE", "application/json");
-	  req.setRequestHeader("ACCEPT", "application/json");
-	  req.onload = function () {
-	    var stat = this.status;
-	    var valid = stat >= 200 && stat < 300;
-	    if (valid) {
-	      data = JSON.parse(this.responseText);
-	      assessPost(data, display);
-	    } else {
-	      badCredentials();
-	    }
-	  };
-	  var blob = new Blob([JSON.stringify(body)], { type: 'application/json' });
-	  req.send(blob);
-	}
+	// function clearSession(){
+	//   sessionStorage.setItem('api_key', null)
+	//   session = false
+	//   loadNav()
+	// }
 
-	function badCredentials() {
-	  var feedback = tool.byId('feedback');
-	  tool.clearHTML(feedback);
-	  var msg = "Sorry, something went wrong.";
-	  appendText(feedback, msg);
-	}
+	// function loginUserForm() {
+	//   let content = tool.byId('content')
+	//   tool.clearHTML(content)
+	//
+	//   let form = tool.addSpan(content, 'loginFrom', null)
+	//   let email = tool.addDiv(form, 'email', 'row' )
+	//     let title = tool.addSpan(email, null, 'title')
+	//     appendText(title, "Email")
+	//     let field = tool.addSpan(email, 'email', 'field')
+	//     field.appendChild( tool.makeInput('text', 'emailField', null) )
+	//
+	//   let password = tool.addDiv(form, 'password', 'row' )
+	//     title = tool.addSpan(password, null, 'title')
+	//     appendText(title, "Password")
+	//     field = tool.addSpan(password, 'password', 'field')
+	//     field.appendChild( tool.makeInput('password', 'passwordField', null) )
+	//
+	//   let submit = tool.addDiv(form, 'submit', 'row')
+	//     addLoginSubmit(submit)
+	// }
 
-	function assessPost(data, display) {
-	  if (display == 'register' || display == 'login') {
-	    newSession(data);
-	  }
-	}
+	// function loginUser() {
+	//   let cred = {
+	//     'verb': 'POST',
+	//     'url':  'https://sweater-weather-api-app.herokuapp.com/api/v1/sessions',
+	//     'body': {
+	//               'email':                  tool.byId('emailField').value,
+	//               'password':               tool.byId('passwordField').value,
+	//             },
+	//     'display': 'login'
+	//   }
+	//   makePostRequest(cred)
+	// }
 
-	function newSession(data) {
-	  var key = data['data']['attributes']['api_key'];
-	  sessionStorage.setItem('api_key', key);
-	  session = true;
-	  loadNav();
-	  nowLoggedIn();
-	}
-
-	function nowLoggedIn() {
-	  var feedback = tool.byId('feedback');
-	  tool.clearHTML(feedback);
-	  var msg = "You're now logged in, please explore and add favorite locations!";
-	  appendText(feedback, msg);
-	  var content = tool.byId('content');
-	  tool.clearHTML(content);
-	}
-
-	function clearSession() {
-	  sessionStorage.setItem('api_key', null);
-	  session = false;
-	  loadNav();
-	}
-
-	function loginUserForm() {
-	  var content = tool.byId('content');
-	  tool.clearHTML(content);
-
-	  var form = tool.addSpan(content, 'loginFrom', null);
-	  var email = tool.addDiv(form, 'email', 'row');
-	  var title = tool.addSpan(email, null, 'title');
-	  appendText(title, "Email");
-	  var field = tool.addSpan(email, 'email', 'field');
-	  field.appendChild(makeInput('text', 'emailField', null));
-
-	  var password = tool.addDiv(form, 'password', 'row');
-	  title = tool.addSpan(password, null, 'title');
-	  appendText(title, "Password");
-	  field = tool.addSpan(password, 'password', 'field');
-	  field.appendChild(makeInput('password', 'passwordField', null));
-
-	  var submit = tool.addDiv(form, 'submit', 'row');
-	  addLoginSubmit(submit);
-	}
-
-	function loginUser() {
-	  var cred = {
-	    'verb': 'POST',
-	    'url': 'https://sweater-weather-api-app.herokuapp.com/api/v1/sessions',
-	    'body': {
-	      'email': tool.byId('emailField').value,
-	      'password': tool.byId('passwordField').value
-	    },
-	    'display': 'login'
-	  };
-	  makePostRequest(cred);
-	}
 
 	// ---- Forecast -----
 
@@ -330,7 +337,7 @@
 	// ---- Structure -----
 
 	function addSearchBar(nav) {
-	  var field = makeInput('text', 'navSearch', 'nav_element');
+	  var field = tool.makeInput('text', 'navSearch', 'nav_element');
 	  nav.appendChild(field);
 	  field = tool.byId('navSearch');
 	  field.placeholder = "Search for a US City";
@@ -338,7 +345,7 @@
 	}
 
 	function addSearchSubmit(nav) {
-	  var submit = makeInput('submit', 'navSearchButton', 'nav_element');
+	  var submit = tool.makeInput('submit', 'navSearchButton', 'nav_element');
 	  nav.appendChild(submit);
 	  submit = tool.byId('navSearchButton');
 	  submit.addEventListener('click', function () {
@@ -348,21 +355,18 @@
 
 	// TO DO - Merge these submit functions
 
-	function addRegisterSubmit(element) {
-	  var submit = makeInput('submit', 'registerSubmit', null);
-	  submit.addEventListener('click', function () {
-	    makeUser();
-	  });
-	  element.appendChild(submit);
-	}
+	// function addRegisterSubmit(element) {
+	//   let submit = tool.makeInput('submit', 'registerSubmit', null)
+	//   submit.addEventListener('click', function() { makeUser() } )
+	//   element.appendChild(submit)
+	// }
 
-	function addLoginSubmit(element) {
-	  var submit = makeInput('submit', 'loginSubmit', null);
-	  submit.addEventListener('click', function () {
-	    loginUser();
-	  });
-	  element.appendChild(submit);
-	}
+	// function addLoginSubmit(element) {
+	//   let submit = tool.makeInput('submit', 'loginSubmit', null)
+	//   submit.addEventListener('click', function() { loginUser() } )
+	//   element.appendChild(submit)
+	// }
+
 
 	function addFavoritesButton(nav) {
 	  var favorites = makeNavButton("favorites", "Favorites");
@@ -372,12 +376,13 @@
 	function addRegisterButton(nav) {
 	  var register = makeNavButton('register', 'Register');
 	  register.addEventListener('click', function () {
-	    registerUser();
+	    sesh.registerUser();
 	  });
 	  nav.appendChild(register);
 	}
 
 	function addSessionButton(nav) {
+	  var session = assessSession();
 	  var txt = session ? "Logout" : 'Login';
 	  var seshButton = makeNavButton('session', txt);
 	  seshButton.addEventListener('click', function () {
@@ -387,6 +392,10 @@
 	    clearSession();
 	  });
 	  nav.appendChild(seshButton);
+	}
+
+	function assessSession() {
+	  return sessionStorage.getItem('api_key');
 	}
 
 	// ---- General HTML Elements ----
@@ -410,20 +419,13 @@
 	}
 
 	// TO DO - make navSpan() more like this
-	function makeInput(type) {
-	  var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-	  var className = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-	  var field = document.createElement("INPUT");
-	  field.setAttribute("type", type);
-	  if (id) {
-	    field.id = id;
-	  }
-	  if (className) {
-	    field.className = className;
-	  }
-	  return field;
-	}
+	// function tool.makeInput(type, id=null, className=null) {
+	//   let field = document.createElement("INPUT");
+	//   field.setAttribute("type", type);
+	//   if (id) { field.id = id }
+	//   if (className) { field.className = className }
+	//   return field
+	// }
 
 /***/ }),
 /* 1 */
@@ -491,12 +493,262 @@
 	      element.appendChild(span);
 	      return span;
 	    }
+	  }, {
+	    key: 'makeInput',
+	    value: function makeInput(type) {
+	      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+	      var className = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+	      var field = document.createElement("INPUT");
+	      field.setAttribute("type", type);
+	      if (id) {
+	        field.id = id;
+	      }
+	      if (className) {
+	        field.className = className;
+	      }
+	      return field;
+	    }
 	  }]);
 
 	  return DOMTools;
 	}();
 
 	exports.default = DOMTools;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _dom_tools = __webpack_require__(1);
+
+	var _dom_tools2 = _interopRequireDefault(_dom_tools);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var tool = new _dom_tools2.default();
+
+	var UserSession = function () {
+	  function UserSession() {
+	    _classCallCheck(this, UserSession);
+	  }
+
+	  _createClass(UserSession, [{
+	    key: 'clearSession',
+
+
+	    // build form
+	    // submit form
+	    // build page
+	    // fill with data
+
+	    // ---- Logout ----
+
+	    value: function clearSession() {
+	      sessionStorage.setItem('api_key', null);
+	      // session = false
+	      loadNav();
+	    }
+
+	    // ---- Register ----
+
+	  }, {
+	    key: 'registerUser',
+	    value: function registerUser() {
+	      var content = tool.byId('content');
+	      tool.clearHTML(content);
+	      buildRegisterForm(content);
+	    }
+	  }, {
+	    key: 'buildRegisterForm',
+	    value: function buildRegisterForm(element) {
+	      var form = tool.addSpan(element, 'registerFrom', null);
+	      emailField(form);
+	      passwordField(form);
+	      passwordConfirmationField(form);
+	      registerSubmit(form);
+	    }
+	  }, {
+	    key: 'makeUser',
+	    value: function makeUser() {
+	      var user = newUser();
+	      makePostRequest(user);
+	    }
+	  }, {
+	    key: 'newUser',
+	    value: function newUser() {
+	      var user = {
+	        'verb': 'POST',
+	        'url': 'https://sweater-weather-api-app.herokuapp.com/api/v1/users',
+	        'body': {
+	          'email': tool.byId('emailField').value,
+	          'password': tool.byId('passwordField').value,
+	          'password_confirmation': tool.byId('confirmField').value
+	        }
+	        // 'display': 'register'
+	      };
+	      return user;
+	    }
+
+	    // ---- Login ----
+
+	  }, {
+	    key: 'loginUserForm',
+	    value: function loginUserForm() {
+	      var content = tool.byId('content');
+	      tool.clearHTML(content);
+
+	      var form = tool.addSpan(content, 'loginFrom', null);
+	      emailField(form);
+	      passwordField(form);
+	      loginSubmit(form);
+	    }
+	  }, {
+	    key: 'loginUser',
+	    value: function loginUser() {
+	      var user = user();
+	      makePostRequest(user);
+	    }
+	  }, {
+	    key: 'user',
+	    value: function user() {
+	      var user = {
+	        'verb': 'POST',
+	        'url': 'https://sweater-weather-api-app.herokuapp.com/api/v1/sessions',
+	        'body': {
+	          'email': tool.byId('emailField').value,
+	          'password': tool.byId('passwordField').value
+	        }
+	        // 'display': 'login'
+	      };
+	      return user;
+	    }
+
+	    // ---- API ----
+
+	  }, {
+	    key: 'makePostRequest',
+	    value: function makePostRequest(obj) {
+	      var verb = obj['verb'];
+	      var url = obj['url'];
+	      var body = obj['body'];
+	      // let display = obj['display']
+
+	      var data;
+	      var req = new XMLHttpRequest();
+	      req.open(verb, url);
+	      req.setRequestHeader("CCONTENT_TYPE", "application/json");
+	      req.setRequestHeader("ACCEPT", "application/json");
+	      req.onload = function () {
+	        var stat = this.status;
+	        var valid = stat >= 200 && stat < 300;
+	        if (valid) {
+	          data = JSON.parse(this.responseText);
+	          // assessPost(data, display)
+	          newSession(data);
+	        } else {
+	          badCredentials();
+	        }
+	      };
+	      var blob = new Blob([JSON.stringify(body)], { type: 'application/json' });
+	      req.send(blob);
+	    }
+	  }, {
+	    key: 'badCredentials',
+	    value: function badCredentials() {
+	      var feedback = tool.byId('feedback');
+	      tool.clearHTML(feedback);
+	      var msg = "Sorry, something went wrong.";
+	      appendText(feedback, msg);
+	    }
+	  }, {
+	    key: 'newSession',
+	    value: function newSession(data) {
+	      var key = data['data']['attributes']['api_key'];
+	      sessionStorage.setItem('api_key', key);
+	      // TO DO - Handle this straight from the session storage!
+	      // session = true
+	      loadNav();
+	      nowLoggedIn();
+	    }
+	  }, {
+	    key: 'nowLoggedIn',
+	    value: function nowLoggedIn() {
+	      var feedback = tool.byId('feedback');
+	      tool.clearHTML(feedback);
+	      var msg = "You're now logged in, please explore and add favorite locations!";
+	      appendText(feedback, msg);
+	      var content = tool.byId('content');
+	      tool.clearHTML(content);
+	    }
+
+	    // ---- HTML Fields ----
+
+	  }, {
+	    key: 'emailField',
+	    value: function emailField(form) {
+	      var email = tool.addDiv(form, 'email', 'row');
+	      var title = tool.addSpan(email, null, 'title');
+	      appendText(title, "Email");
+	      var field = tool.addSpan(email, 'email', 'field');
+	      field.appendChild(tool.makeInput('text', 'emailField', null));
+	    }
+	  }, {
+	    key: 'passwordField',
+	    value: function passwordField(form) {
+	      var password = tool.addDiv(form, 'password', 'row');
+	      var title = tool.addSpan(password, null, 'title');
+	      appendText(title, "Password");
+	      var field = tool.addSpan(password, 'password', 'field');
+	      field.appendChild(tool.makeInput('password', 'passwordField', null));
+	    }
+	  }, {
+	    key: 'passwordConfirmationField',
+	    value: function passwordConfirmationField(form) {
+	      var confirm = tool.addDiv(form, 'confrim', 'row');
+	      var title = tool.addSpan(confirm, null, 'title');
+	      appendText(title, "Confirm Password");
+	      var field = tool.addSpan(confirm, 'confirm', 'field');
+	      field.appendChild(tool.makeInput('password', 'confirmField', null));
+	    }
+	  }, {
+	    key: 'registerSubmit',
+	    value: function registerSubmit(form) {
+	      var submit = tool.addDiv(form, 'submit', 'row');
+	      var button = tool.makeInput('submit', 'registerSubmit', null);
+	      button.addEventListener('click', function () {
+	        makeUser();
+	      });
+	      submit.appendChild(button);
+	      form.appendChild(submit);
+	    }
+	  }, {
+	    key: 'loginSubmit',
+	    value: function loginSubmit(form) {
+	      var submit = tool.addDiv(form, 'submit', 'row');
+	      var button = tool.makeInput('submit', 'loginSubmit', null);
+	      button.addEventListener('click', function () {
+	        loginUser();
+	      });
+	      submit.appendChild(button);
+	      form.appendChild(submit);
+	    }
+	  }]);
+
+	  return UserSession;
+	}();
+
+	exports.default = UserSession;
 
 /***/ })
 /******/ ]);
