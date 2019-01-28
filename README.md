@@ -33,10 +33,11 @@ To contribute, see the setup instructions.
 * Please update the `README` if anything is affected.
 * Deployment is not from the Master branch, but rather the `gh-pages` branch.
 
-### Core Unfinished Features
-- [ ] User can add favorite locations
-- [ ] User can see all favorite locations
-- [ ] User can remove a favorite location
+#### Core Unfinished Features
+- [ ] User can [add favorite locations](https://github.com/Kate-v2/sweater_weather_web/issues/8)
+- [ ] User can [see all favorite locations](https://github.com/Kate-v2/sweater_weather_web/issues/10)
+- [ ] User can [remove a favorite location](https://github.com/Kate-v2/sweater_weather_web/issues/9)
+- [ ] [Gifs can be imported (Backend Change)](https://github.com/Kate-v2/sweater_weather_web/issues/25)
 
 ## Core Contributors
 [Kate](https://github.com/Kate-v2)
