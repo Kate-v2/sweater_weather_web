@@ -46,5 +46,5 @@ To contribute, see the setup instructions.
 
 
 ## Turing Project Details:
-[Assignment](http://backend.turing.io/module4/projects/self_directed_fe/self_directed_fe_spec)
-[Rubric](http://backend.turing.io/module4/projects/self_directed_fe/self_directed_fe_rubric)
+* [Assignment](http://backend.turing.io/module4/projects/self_directed_fe/self_directed_fe_spec)
+* [Rubric](http://backend.turing.io/module4/projects/self_directed_fe/self_directed_fe_rubric)
