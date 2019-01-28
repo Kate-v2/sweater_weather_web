@@ -390,6 +390,18 @@
 	      var node = document.createTextNode(text);
 	      element.appendChild(node);
 	    }
+	  }, {
+	    key: 'asDate',
+	    value: function asDate(unix) {
+	      return new Date(unix * 1000);
+	    }
+	  }, {
+	    key: 'asWeekday',
+	    value: function asWeekday(date) {
+	      var day = date.getDay();
+	      var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+	      return days[day];
+	    }
 	  }]);
 
 	  return DOMTools;
@@ -485,6 +497,66 @@
 	      };
 
 	      this.displayCurrent(showCurrent, overview);
+
+	      var showForecast = tool.addDiv(content, 'forecast', null);
+	      this.display7Day(forecast, showForecast);
+	    }
+	  }, {
+	    key: 'display7Day',
+	    value: function display7Day(data, element) {
+	      var title = tool.addDiv(element, 'ForecastTitle', null);
+	      tool.appendText(title, "Forecast");
+
+	      // TO DO - ADD HOURLY
+
+	      var days = data['days'];
+	      days.shift();
+
+	      var l = days.length;
+
+	      for (var i = 0; i < l; i++) {
+
+	        var str = days[i];
+
+	        var date = tool.asDate(days[i]['time']);
+
+	        var day = tool.addDiv(element, 'day' + i, 'forecastDay');
+	        var weekday = tool.addSpan(day, null, 'weekday');
+	        tool.appendText(weekday, tool.asWeekday(date));
+
+	        var icon = tool.addSpan(day, null, 'icon');
+	        var pic = tool.addSpan(icon, 'pic', null);
+	        tool.appendText(pic, "IMG");
+	        var desc = tool.addSpan(icon, 'desc', null);
+	        tool.appendText(desc, str['icon']);
+
+	        var drop = document.createElement('img');
+	        drop.src = 'https://static.thenounproject.com/png/541823-200.png';
+	        drop.id = 'precip';
+	        var precip = tool.addSpan(day, null, 'changeOfRain');
+	        var img = tool.addSpan(precip, 'rain', null);
+	        img.appendChild(drop);
+	        var chance = tool.addSpan(precip, 'chance', null);
+	        tool.appendText(chance, str['precip_probability'] * 100 + '%');
+
+	        var up = document.createElement('img');
+	        up.src = 'http://cdn.onlinewebfonts.com/svg/img_231938.png';
+	        up.id = 'highTemp';
+	        var high = tool.addSpan(day, null, 'temps');
+	        img = tool.addSpan(high, 'high', null);
+	        img.appendChild(up);
+	        var daysHigh = tool.addSpan(high, 'daysHigh', null);
+	        tool.appendText(daysHigh, str['high'] + '\xB0');
+
+	        var down = document.createElement('img');
+	        down.src = 'http://www.cndajin.com/data/wls/26/5484023.png';
+	        down.id = 'highTemp';
+	        var low = tool.addSpan(day, null, 'temps');
+	        img = tool.addSpan(low, 'low', null);
+	        img.appendChild(down);
+	        var daysLow = tool.addSpan(low, 'daysLow', null);
+	        tool.appendText(daysLow, str['low'] + '\xB0');
+	      }
 	    }
 	  }, {
 	    key: 'displayToday',
