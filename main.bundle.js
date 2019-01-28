@@ -75,26 +75,26 @@
 	}
 
 	function registerForm(element) {
-	  var form = addSpan(content, 'registerFrom', null);
+	  var form = tool.addSpan(content, 'registerFrom', null);
 
 	  // TO DO - break email, password, submit into functions to be reused with login
 
 	  var email = tool.addDiv(form, 'email', 'row');
-	  var title = addSpan(email, null, 'title');
+	  var title = tool.addSpan(email, null, 'title');
 	  appendText(title, "Email");
-	  var field = addSpan(email, 'email', 'field');
+	  var field = tool.addSpan(email, 'email', 'field');
 	  field.appendChild(makeInput('text', 'emailField', null));
 
 	  var password = tool.addDiv(form, 'password', 'row');
-	  title = addSpan(password, null, 'title');
+	  title = tool.addSpan(password, null, 'title');
 	  appendText(title, "Password");
-	  field = addSpan(password, 'password', 'field');
+	  field = tool.addSpan(password, 'password', 'field');
 	  field.appendChild(makeInput('password', 'passwordField', null));
 
 	  var confirm = tool.addDiv(form, 'confrim', 'row');
-	  title = addSpan(confirm, null, 'title');
+	  title = tool.addSpan(confirm, null, 'title');
 	  appendText(title, "Confirm Password");
-	  field = addSpan(confirm, 'confirm', 'field');
+	  field = tool.addSpan(confirm, 'confirm', 'field');
 	  field.appendChild(makeInput('password', 'confirmField', null));
 
 	  var submit = tool.addDiv(form, 'submit', 'row');
@@ -180,17 +180,17 @@
 	  var content = tool.byId('content');
 	  tool.clearHTML(content);
 
-	  var form = addSpan(content, 'loginFrom', null);
+	  var form = tool.addSpan(content, 'loginFrom', null);
 	  var email = tool.addDiv(form, 'email', 'row');
-	  var title = addSpan(email, null, 'title');
+	  var title = tool.addSpan(email, null, 'title');
 	  appendText(title, "Email");
-	  var field = addSpan(email, 'email', 'field');
+	  var field = tool.addSpan(email, 'email', 'field');
 	  field.appendChild(makeInput('text', 'emailField', null));
 
 	  var password = tool.addDiv(form, 'password', 'row');
-	  title = addSpan(password, null, 'title');
+	  title = tool.addSpan(password, null, 'title');
 	  appendText(title, "Password");
-	  field = addSpan(password, 'password', 'field');
+	  field = tool.addSpan(password, 'password', 'field');
 	  field.appendChild(makeInput('password', 'passwordField', null));
 
 	  var submit = tool.addDiv(form, 'submit', 'row');
@@ -262,18 +262,18 @@
 
 	  var showToday = tool.addDiv(element, 'today', 'overview');
 
-	  var today1 = addSpan(showToday, 'today1_temp', 'today');
+	  var today1 = tool.addSpan(showToday, 'today1_temp', 'today');
 	  var today1_1 = tool.addDiv(today1, 'today1_1', 'today1');
-	  var today1_gif = addSpan(today1_1, 'today1_gif', 'today1_1');
+	  var today1_gif = tool.addSpan(today1_1, 'today1_gif', 'today1_1');
 	  appendText(today1_gif, "IMG"); // TO DO - add gif image
-	  var today1_desc = addSpan(today1_1, 'today1_desc', 'today1_1');
+	  var today1_desc = tool.addSpan(today1_1, 'today1_desc', 'today1_1');
 	  appendText(today1_desc, data['desc']);
 	  var today1_2 = tool.addDiv(today1, 'today1_2', 'today1');
 	  appendText(today1_2, data['temp']);
 	  var today1_3 = tool.addDiv(today1, 'today1_3', 'today1');
 	  appendText(today1_3, highLow);
 
-	  var today2 = addSpan(showToday, 'today2_location', 'today');
+	  var today2 = tool.addSpan(showToday, 'today2_location', 'today');
 	  var today2_1 = tool.addDiv(today2, 'today2_1', 'today2');
 	  appendText(today2_1, cityState);
 	  var today2_2 = tool.addDiv(today2, 'today2_2', 'today2');
@@ -281,7 +281,7 @@
 	  var today2_3 = tool.addDiv(today2, 'today2_3', 'today2');
 	  appendText(today2_3, data['time']);
 
-	  var today3 = addSpan(showToday, 'today2_location', 'today');
+	  var today3 = tool.addSpan(showToday, 'today2_location', 'today');
 	  var today3_1 = tool.addDiv(today3, 'today3_1', 'today3');
 	  appendText(today3_1, "Change Location");
 	  var today3_2 = tool.addDiv(today3, 'today3_2', 'today3');
@@ -391,22 +391,6 @@
 
 	// ---- General HTML Elements ----
 
-
-	function addSpan(element) {
-	  var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-	  var className = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-	  var span = document.createElement('span');
-	  if (id) {
-	    span.id = id;
-	  }
-	  if (className) {
-	    span.className = className;
-	  }
-	  element.appendChild(span);
-	  return span;
-	}
-
 	function makeNavButton(id, text) {
 	  var button = navSpan();
 	  button.id = id;
@@ -474,6 +458,38 @@
 	    key: 'clearValue',
 	    value: function clearValue(element) {
 	      element.value = '';
+	    }
+	  }, {
+	    key: 'addDiv',
+	    value: function addDiv(element) {
+	      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+	      var className = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+	      var div = document.createElement('div');
+	      if (id) {
+	        div.id = id;
+	      }
+	      if (className) {
+	        div.className = className;
+	      }
+	      element.appendChild(div);
+	      return div;
+	    }
+	  }, {
+	    key: 'addSpan',
+	    value: function addSpan(element) {
+	      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+	      var className = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+	      var span = document.createElement('span');
+	      if (id) {
+	        span.id = id;
+	      }
+	      if (className) {
+	        span.className = className;
+	      }
+	      element.appendChild(span);
+	      return span;
 	    }
 	  }]);
 
