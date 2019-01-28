@@ -5,6 +5,9 @@ body {
   background-repeat: no-repeat;
   background-position: center top;
   background-attachment: fixed;
+
+  font-size: 10px;
+  font-size: 1.5vw;
 }
 
 
@@ -118,7 +121,9 @@ input {
   align-items: stretch;
 
 
-  font-size: 30%;
+  /* font-size: 30%; */
+  /* font-size: 10px;
+  font-size: 1.5vw; */
 
 }
 
@@ -181,9 +186,30 @@ input {
 } */
 
 #current1 {
+  width: 50%;
+
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: stretch;
+}
+
+#current2 {
+  width: 50%;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: justify;
+  align-items: stretch;
+}
+
+#current2 .currentData {
+  width: 65%;
+  text-align: right;
+}
+#current2 .currentTitle {
+  width: 35%;
+  text-align: left;
 }
