@@ -227,7 +227,7 @@
 
 	function displayForecast(data) {
 
-	  clearValue(tool.byId('navSearch'));
+	  tool.clearValue(tool.byId('navSearch'));
 
 	  var info = data['data']['attributes'];
 
@@ -390,11 +390,6 @@
 	}
 
 	// ---- General HTML Elements ----
-
-
-	// function clearValue(element) {
-	//   element.value = ''
-	// }
 
 	function addDiv(element) {
 	  var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
