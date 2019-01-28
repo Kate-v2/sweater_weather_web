@@ -25,6 +25,7 @@ Overall, this is a simple forecast app that can be expanded for your purposes.
 * Favorites Buttons are not yet functional ([see unfinished](https://github.com/Kate-v2/sweater_weather_web/blob/master/README.md#core-unfinished-features))
 
 ## Running Tests
+* There are no tests currently. Need to [implement feature tests](https://github.com/Kate-v2/sweater_weather_web/projects/1#card-16910507).
 
 ## How to Contribute
 To contribute, see the setup instructions.
