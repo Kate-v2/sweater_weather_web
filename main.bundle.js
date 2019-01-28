@@ -60,7 +60,7 @@
 
 	function loadNav() {
 	  var nav = tool.byId('navBar');
-	  clearHTML(nav);
+	  tool.clearHTML(nav);
 	  addSearchBar(nav);
 	  session ? addFavoritesButton(nav) : addRegisterButton(nav);
 	  addSessionButton(nav); // TO DO - make this two buttons like above, SRP the function
@@ -70,7 +70,7 @@
 
 	function registerUser() {
 	  var content = tool.byId('content');
-	  clearHTML(content);
+	  tool.clearHTML(content);
 	  registerForm(content);
 	}
 
@@ -142,7 +142,7 @@
 
 	function badCredentials() {
 	  var feedback = tool.byId('feedback');
-	  clearHTML(feedback);
+	  tool.clearHTML(feedback);
 	  var msg = "Sorry, something went wrong.";
 	  appendText(feedback, msg);
 	}
@@ -163,11 +163,11 @@
 
 	function nowLoggedIn() {
 	  var feedback = tool.byId('feedback');
-	  clearHTML(feedback);
+	  tool.clearHTML(feedback);
 	  var msg = "You're now logged in, please explore and add favorite locations!";
 	  appendText(feedback, msg);
 	  var content = tool.byId('content');
-	  clearHTML(content);
+	  tool.clearHTML(content);
 	}
 
 	function clearSession() {
@@ -178,7 +178,7 @@
 
 	function loginUserForm() {
 	  var content = tool.byId('content');
-	  clearHTML(content);
+	  tool.clearHTML(content);
 
 	  var form = addSpan(content, 'loginFrom', null);
 	  var email = addDiv(form, 'email', 'row');
@@ -314,7 +314,7 @@
 
 	function badLocation() {
 	  var feedback = tool.byId('feedback');
-	  clearHTML(feedback);
+	  tool.clearHTML(feedback);
 	  var msg = "Sorry, that location does not exist. Check spelling or try another location.";
 	  appendText(feedback, msg);
 	  // TO DO - grab all location search bars & clear them
@@ -391,13 +391,10 @@
 
 	// ---- General HTML Elements ----
 
-	function clearHTML(element) {
-	  element.innerHTML = '';
-	}
 
-	function clearValue(element) {
-	  element.value = '';
-	}
+	// function clearValue(element) {
+	//   element.value = ''
+	// }
 
 	function addDiv(element) {
 	  var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
@@ -467,7 +464,7 @@
 /* 1 */
 /***/ (function(module, exports) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -483,9 +480,19 @@
 	  }
 
 	  _createClass(DOMTools, [{
-	    key: "byId",
+	    key: 'byId',
 	    value: function byId(id) {
 	      return document.getElementById(id);
+	    }
+	  }, {
+	    key: 'clearHTML',
+	    value: function clearHTML(element) {
+	      element.innerHTML = '';
+	    }
+	  }, {
+	    key: 'clearValue',
+	    value: function clearValue(element) {
+	      element.value = '';
 	    }
 	  }]);
 
