@@ -77,19 +77,17 @@
 	  var field = addSpan(email, 'email', 'field');
 	  field.appendChild(makeInput('text', 'emailField', null));
 
-	  // TO DO - add characters as private attribute
 	  var password = addDiv(form, 'password', 'row');
 	  title = addSpan(password, null, 'title');
 	  appendText(title, "Password");
 	  field = addSpan(password, 'password', 'field');
-	  field.appendChild(makeInput('text', 'passwordField', null));
+	  field.appendChild(makeInput('password', 'passwordField', null));
 
-	  // TO DO - add characters as private attribute
 	  var confirm = addDiv(form, 'confrim', 'row');
 	  title = addSpan(confirm, null, 'title');
 	  appendText(title, "Confirm Password");
 	  field = addSpan(confirm, 'confirm', 'field');
-	  field.appendChild(makeInput('text', 'confirmField', null));
+	  field.appendChild(makeInput('password', 'confirmField', null));
 
 	  var submit = addDiv(form, 'submit', 'row');
 	  addRegisterSubmit(submit);
@@ -141,7 +139,6 @@
 	}
 
 	function assessPost(data, display) {
-	  debugger;
 	  if (display == 'register') {
 	    newSession(data, true);
 	  }
@@ -160,7 +157,6 @@
 	  sessionStorage.setItem('api_key', key);
 	  session = true;
 	  loadNav();
-	  debugger;
 	}
 
 	function thankForJoining() {
@@ -185,12 +181,11 @@
 	  var field = addSpan(email, 'email', 'field');
 	  field.appendChild(makeInput('text', 'emailField', null));
 
-	  // TO DO - add characters as private attribute
 	  var password = addDiv(form, 'password', 'row');
 	  title = addSpan(password, null, 'title');
 	  appendText(title, "Password");
 	  field = addSpan(password, 'password', 'field');
-	  field.appendChild(makeInput('text', 'passwordField', null));
+	  field.appendChild(makeInput('password', 'passwordField', null));
 
 	  var submit = addDiv(form, 'submit', 'row');
 	  addLoginSubmit(submit);
