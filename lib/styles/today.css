@@ -1,6 +1,17 @@
-#today {
-  padding: 3%;
-  background: lightgrey;
+body {
+  /* background-image: url(https://cdn-images-1.medium.com/max/2400/1*Bg4JVDlN2J4j693HHfH_EQ.jpeg); */
+  background-color: white;
+  background-image: url(https://cdn-images-1.medium.com/max/2400/1*Bg4JVDlN2J4j693HHfH_EQ.jpeg);
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
+}
+
+
+#navBar {
+  background: #18212A;
+  color: white;
+  padding: .5%;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -8,6 +19,117 @@
   align-items: stretch;
 }
 
+#navBar span {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+#navBar span:hover {
+  background: #283140;
+}
+
+
+
+#feedback {
+  background: #18212A;
+  color: white;
+  padding: 5%;
+  text-align: center;
+}
+
+
+#content {
+  padding: 3%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+#navBar #navSearch {
+  width: 70%;
+}
+
+
+input {
+  background: #283140;
+  color: white;
+  border: none;
+}
+
+
+
+/* --- Login --- */
+
+#loginForm {
+  padding-top: 3%;
+  padding-bottom: 3%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  text-align: right;
+}
+
+#registerForm {
+  padding-top: 3%;
+  padding-bottom: 3%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  text-align: right;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  /* align-items: stretch; */
+}
+
+.title {
+  width: 20%;
+}
+
+.field {
+  width: 40%;
+}
+
+.field input{
+  width: 100%;
+}
+
+
+
+
+/* --- Forecast --- */
+
+#today {
+  padding: 3%;
+  background: #18212A;
+  opacity: 0.5;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+
 .today {
-  padding: 10%;
+  padding: 2%;
+  width: 30%;
+}
+
+.today1 {
+  padding: 5%;
+}
+.today2 {
+  padding: 5%;
+}
+.today3 {
+  padding: 5%;
 }

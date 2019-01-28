@@ -71,11 +71,15 @@
 	function registerUser() {
 	  var content = tool.byId('content');
 	  tool.clearHTML(content);
+
+	  var feedback = tool.byId('feedback');
+	  tool.clearHTML(feedback);
+
 	  registerForm(content);
 	}
 
 	function registerForm(element) {
-	  var form = tool.addSpan(content, 'registerFrom', null);
+	  var form = tool.addSpan(content, 'registerForm', null);
 
 	  // TO DO - break email, password, submit into functions to be reused with login
 
@@ -174,13 +178,18 @@
 	  sessionStorage.setItem('api_key', null);
 	  session = false;
 	  loadNav();
+	  var feedback = tool.byId('feedback');
+	  tool.clearHTML(feedback);
 	}
 
 	function loginUserForm() {
 	  var content = tool.byId('content');
 	  tool.clearHTML(content);
 
-	  var form = tool.addSpan(content, 'loginFrom', null);
+	  var feedback = tool.byId('feedback');
+	  tool.clearHTML(feedback);
+
+	  var form = tool.addSpan(content, 'loginForm', null);
 	  var email = tool.addDiv(form, 'email', 'row');
 	  var title = tool.addSpan(email, null, 'title');
 	  appendText(title, "Email");
@@ -229,6 +238,12 @@
 
 	  tool.clearValue(tool.byId('navSearch'));
 
+	  var content = tool.byId('content');
+	  tool.clearHTML(content);
+
+	  var feedback = tool.byId('feedback');
+	  tool.clearHTML(feedback);
+
 	  var info = data['data']['attributes'];
 
 	  var location = info['location'];
@@ -246,11 +261,10 @@
 	    'state': location['state']['short_name'],
 	    'country': location['country']['long_name'],
 	    'time': current['time']
-	  };
 
-	  var content = tool.byId('content');
+	    // let content = tool.byId('content')
 
-	  var overview = tool.addDiv(content, 'overview', null);
+	  };var overview = tool.addDiv(content, 'overview', null);
 
 	  displayToday(showToday, overview);
 	}
