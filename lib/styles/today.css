@@ -1,6 +1,20 @@
-#today {
-  padding: 3%;
-  background: lightgrey;
+body {
+  /* background-image: url(https://cdn-images-1.medium.com/max/2400/1*Bg4JVDlN2J4j693HHfH_EQ.jpeg); */
+  background-color: white;
+  background-image: url(https://cdn-images-1.medium.com/max/2400/1*Bg4JVDlN2J4j693HHfH_EQ.jpeg);
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-attachment: fixed;
+
+  font-size: 10px;
+  font-size: 1.5vw;
+}
+
+
+#navBar {
+  background: #18212A;
+  color: white;
+  padding: .5%;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -8,6 +22,272 @@
   align-items: stretch;
 }
 
-.today {
-  padding: 10%;
+#navBar span {
+  padding-left: 10%;
+  padding-right: 10%;
 }
+
+#navBar span:hover {
+  background: #283140;
+}
+
+
+
+#feedback {
+  background: #18212A;
+  color: white;
+  padding: 5%;
+  text-align: center;
+}
+
+
+#content {
+  padding: 3%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+#navBar #navSearch {
+  width: 70%;
+}
+
+
+input {
+  background: #283140;
+  color: white;
+  border: none;
+}
+
+
+
+/* --- Login --- */
+
+#loginForm {
+  padding-top: 3%;
+  padding-bottom: 3%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  text-align: right;
+}
+
+#registerForm {
+  padding-top: 3%;
+  padding-bottom: 3%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  text-align: right;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  /* align-items: stretch; */
+}
+
+.title {
+  width: 20%;
+}
+
+.field {
+  width: 40%;
+}
+
+.field input{
+  width: 100%;
+}
+
+
+
+
+/* --- Forecast --- */
+
+#overview {
+  padding: 3%;
+  background: #18212A;
+  opacity: 0.5;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+
+
+  /* font-size: 30%; */
+  /* font-size: 10px;
+  font-size: 1.5vw; */
+
+}
+
+#today {
+  padding: 3%;
+  /* background: #18212A;
+  opacity: 0.5;
+  color: white; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+
+.today {
+  padding: 2%;
+  width: 40%;
+}
+
+.today1 {
+  padding: 5%;
+}
+.today2 {
+  padding: 5%;
+}
+.today3 {
+  padding: 5%;
+}
+
+.overview {
+  width: 40%;
+
+}
+
+#CurrentTitle {
+  text-align: center;
+}
+
+#currentContainer {
+  padding: 2%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+#currentContainer span {
+  padding: 5%;
+}
+
+
+#current1 {
+  width: 50%;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+#current2 {
+  width: 50%;
+
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: justify;
+  align-items: stretch;
+}
+
+#current2 .currentData {
+  width: 65%;
+  text-align: right;
+}
+#current2 .currentTitle {
+  width: 35%;
+  text-align: left;
+}
+
+#forecast {
+  background: #18212A;
+  opacity: 0.5;
+  color: white;
+  margin-top: 3%;
+  height: 80%;
+}
+
+#ForecastTitle {
+  margin-top: 3%;
+  text-align: center;
+}
+
+#forecast span {
+  margin: 1%;
+}
+
+.weekday {
+  width: 20%;
+  text-align: left;
+  align-self: flex-start;
+}
+
+.desc {
+  width: 35%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.forecastDay {
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.precip {
+  width: 7%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: center;
+  vertical-align: middle;
+}
+
+.temps {
+  width: 7%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: center;
+  vertical-align: middle;
+}
+
+.changeOfRain{
+  width: 7%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: center;
+  vertical-align: middle;
+}
+
+img {
+  width: 50%;
+  height: auto;
+  align-content: flex-end;
+}
+
+/* #rain {
+  width: 5%;
+  height: auto;
+} */

@@ -50,9 +50,15 @@
 
 	var _dom_tools2 = _interopRequireDefault(_dom_tools);
 
+	var _forecast = __webpack_require__(2);
+
+	var _forecast2 = _interopRequireDefault(_forecast);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var tool = new _dom_tools2.default();
+
+	var forecast = new _forecast2.default();
 
 	var session = false;
 
@@ -71,34 +77,46 @@
 	function registerUser() {
 	  var content = tool.byId('content');
 	  tool.clearHTML(content);
+
+	  var feedback = tool.byId('feedback');
+	  tool.clearHTML(feedback);
+
 	  registerForm(content);
 	}
 
 	function registerForm(element) {
-	  var form = tool.addSpan(content, 'registerFrom', null);
+	  var form = tool.addSpan(content, 'registerForm', null);
 
-	  // TO DO - break email, password, submit into functions to be reused with login
-
-	  var email = tool.addDiv(form, 'email', 'row');
-	  var title = tool.addSpan(email, null, 'title');
-	  appendText(title, "Email");
-	  var field = tool.addSpan(email, 'email', 'field');
-	  field.appendChild(makeInput('text', 'emailField', null));
-
-	  var password = tool.addDiv(form, 'password', 'row');
-	  title = tool.addSpan(password, null, 'title');
-	  appendText(title, "Password");
-	  field = tool.addSpan(password, 'password', 'field');
-	  field.appendChild(makeInput('password', 'passwordField', null));
-
-	  var confirm = tool.addDiv(form, 'confrim', 'row');
-	  title = tool.addSpan(confirm, null, 'title');
-	  appendText(title, "Confirm Password");
-	  field = tool.addSpan(confirm, 'confirm', 'field');
-	  field.appendChild(makeInput('password', 'confirmField', null));
+	  emailField(form);
+	  passwordField(form);
+	  passwordFieldConfirmation(form);
 
 	  var submit = tool.addDiv(form, 'submit', 'row');
 	  addRegisterSubmit(submit);
+	}
+
+	function emailField(form) {
+	  var email = tool.addDiv(form, 'email', 'row');
+	  var title = tool.addSpan(email, null, 'title');
+	  tool.appendText(title, "Email");
+	  var field = tool.addSpan(email, 'email', 'field');
+	  field.appendChild(makeInput('text', 'emailField', null));
+	}
+
+	function passwordField(form) {
+	  var password = tool.addDiv(form, 'password', 'row');
+	  var title = tool.addSpan(password, null, 'title');
+	  tool.appendText(title, "Password");
+	  var field = tool.addSpan(password, 'password', 'field');
+	  field.appendChild(makeInput('password', 'passwordField', null));
+	}
+
+	function passwordFieldConfirmation(form) {
+	  var confirm = tool.addDiv(form, 'confrim', 'row');
+	  var title = tool.addSpan(confirm, null, 'title');
+	  tool.appendText(title, "Confirm Password");
+	  var field = tool.addSpan(confirm, 'confirm', 'field');
+	  field.appendChild(makeInput('password', 'confirmField', null));
 	}
 
 	function makeUser() {
@@ -144,7 +162,7 @@
 	  var feedback = tool.byId('feedback');
 	  tool.clearHTML(feedback);
 	  var msg = "Sorry, something went wrong.";
-	  appendText(feedback, msg);
+	  tool.appendText(feedback, msg);
 	}
 
 	function assessPost(data, display) {
@@ -165,7 +183,7 @@
 	  var feedback = tool.byId('feedback');
 	  tool.clearHTML(feedback);
 	  var msg = "You're now logged in, please explore and add favorite locations!";
-	  appendText(feedback, msg);
+	  tool.appendText(feedback, msg);
 	  var content = tool.byId('content');
 	  tool.clearHTML(content);
 	}
@@ -174,24 +192,20 @@
 	  sessionStorage.setItem('api_key', null);
 	  session = false;
 	  loadNav();
+	  var feedback = tool.byId('feedback');
+	  tool.clearHTML(feedback);
 	}
 
 	function loginUserForm() {
 	  var content = tool.byId('content');
 	  tool.clearHTML(content);
 
-	  var form = tool.addSpan(content, 'loginFrom', null);
-	  var email = tool.addDiv(form, 'email', 'row');
-	  var title = tool.addSpan(email, null, 'title');
-	  appendText(title, "Email");
-	  var field = tool.addSpan(email, 'email', 'field');
-	  field.appendChild(makeInput('text', 'emailField', null));
+	  var feedback = tool.byId('feedback');
+	  tool.clearHTML(feedback);
 
-	  var password = tool.addDiv(form, 'password', 'row');
-	  title = tool.addSpan(password, null, 'title');
-	  appendText(title, "Password");
-	  field = tool.addSpan(password, 'password', 'field');
-	  field.appendChild(makeInput('password', 'passwordField', null));
+	  var form = tool.addSpan(content, 'loginForm', null);
+	  emailField(form);
+	  passwordField(form);
 
 	  var submit = tool.addDiv(form, 'submit', 'row');
 	  addLoginSubmit(submit);
@@ -210,123 +224,6 @@
 	  makePostRequest(cred);
 	}
 
-	// ---- Forecast -----
-
-	function getForecast() {
-	  var city = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-
-	  var location = city ? city : tool.byId('navSearch').value;
-	  var obj = {
-	    'verb': 'GET',
-	    'url': 'https://sweater-weather-api-app.herokuapp.com/api/v1/forecasts?location=',
-	    'term': location,
-	    'display': 'forecast'
-	  };
-	  makeGetRequest(obj);
-	}
-
-	function displayForecast(data) {
-
-	  tool.clearValue(tool.byId('navSearch'));
-
-	  var info = data['data']['attributes'];
-
-	  var location = info['location'];
-	  var today = info['today'];
-	  var current = info['current'];
-	  var forecast = info['forecast']['data']['attributes'];
-
-	  var showToday = {
-	    'gif': null,
-	    'desc': current['summary'],
-	    'temp': current['temperature'],
-	    'high': today['high'],
-	    'low': today['low'],
-	    'city': location['city']['long_name'],
-	    'state': location['state']['short_name'],
-	    'country': location['country']['long_name'],
-	    'time': current['time']
-	  };
-
-	  var content = tool.byId('content');
-
-	  var overview = tool.addDiv(content, 'overview', null);
-
-	  displayToday(showToday, overview);
-	}
-
-	function displayToday(data, element) {
-
-	  var cityState = data['city'] + ', ' + data['state'];
-	  var highLow = "High: " + data['high'] + " Low: " + data['low'];
-
-	  var showToday = tool.addDiv(element, 'today', 'overview');
-
-	  var today1 = tool.addSpan(showToday, 'today1_temp', 'today');
-	  var today1_1 = tool.addDiv(today1, 'today1_1', 'today1');
-	  var today1_gif = tool.addSpan(today1_1, 'today1_gif', 'today1_1');
-	  appendText(today1_gif, "IMG"); // TO DO - add gif image
-	  var today1_desc = tool.addSpan(today1_1, 'today1_desc', 'today1_1');
-	  appendText(today1_desc, data['desc']);
-	  var today1_2 = tool.addDiv(today1, 'today1_2', 'today1');
-	  appendText(today1_2, data['temp']);
-	  var today1_3 = tool.addDiv(today1, 'today1_3', 'today1');
-	  appendText(today1_3, highLow);
-
-	  var today2 = tool.addSpan(showToday, 'today2_location', 'today');
-	  var today2_1 = tool.addDiv(today2, 'today2_1', 'today2');
-	  appendText(today2_1, cityState);
-	  var today2_2 = tool.addDiv(today2, 'today2_2', 'today2');
-	  appendText(today2_2, data['country']);
-	  var today2_3 = tool.addDiv(today2, 'today2_3', 'today2');
-	  appendText(today2_3, data['time']);
-
-	  var today3 = tool.addSpan(showToday, 'today2_location', 'today');
-	  var today3_1 = tool.addDiv(today3, 'today3_1', 'today3');
-	  appendText(today3_1, "Change Location");
-	  var today3_2 = tool.addDiv(today3, 'today3_2', 'today3');
-	  appendText(today3_2, "Add to Favorites");
-	}
-
-	// ---- API -----
-
-	function makeGetRequest(obj) {
-	  var verb = obj['verb'];
-	  var url = obj['url'];
-	  var term = obj['term'];
-	  var endpoint = url + term;
-
-	  var data;
-	  var req = new XMLHttpRequest();
-	  req.open(verb, endpoint);
-	  req.onload = function () {
-	    var stat = this.status;
-	    var valid = stat >= 200 && stat < 300;
-	    if (valid) {
-	      data = JSON.parse(this.responseText);
-	      assessDisplay(data, obj['display']);
-	    } else {
-	      badLocation();
-	    }
-	  };
-	  req.send();
-	}
-
-	function badLocation() {
-	  var feedback = tool.byId('feedback');
-	  tool.clearHTML(feedback);
-	  var msg = "Sorry, that location does not exist. Check spelling or try another location.";
-	  appendText(feedback, msg);
-	  // TO DO - grab all location search bars & clear them
-	}
-
-	function assessDisplay(data, display) {
-	  if (display == 'forecast') {
-	    displayForecast(data);
-	  }
-	  // else if (display == 'favorites') { displayFavorites(data) }
-	}
-
 	// ---- Structure -----
 
 	function addSearchBar(nav) {
@@ -341,8 +238,9 @@
 	  var submit = makeInput('submit', 'navSearchButton', 'nav_element');
 	  nav.appendChild(submit);
 	  submit = tool.byId('navSearchButton');
+	  // submit.addEventListener('click', function() { getForecast() } )
 	  submit.addEventListener('click', function () {
-	    getForecast();
+	    forecast.getForecast();
 	  });
 	}
 
@@ -394,13 +292,8 @@
 	function makeNavButton(id, text) {
 	  var button = navSpan();
 	  button.id = id;
-	  appendText(button, text);
+	  tool.appendText(button, text);
 	  return button;
-	}
-
-	function appendText(element, text) {
-	  var node = document.createTextNode(text);
-	  element.appendChild(node);
 	}
 
 	function navSpan() {
@@ -491,12 +384,316 @@
 	      element.appendChild(span);
 	      return span;
 	    }
+	  }, {
+	    key: 'appendText',
+	    value: function appendText(element, text) {
+	      var node = document.createTextNode(text);
+	      element.appendChild(node);
+	    }
+	  }, {
+	    key: 'asDate',
+	    value: function asDate(unix) {
+	      return new Date(unix * 1000);
+	    }
+	  }, {
+	    key: 'asWeekday',
+	    value: function asWeekday(date) {
+	      var day = date.getDay();
+	      var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+	      return days[day];
+	    }
 	  }]);
 
 	  return DOMTools;
 	}();
 
 	exports.default = DOMTools;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _dom_tools = __webpack_require__(1);
+
+	var _dom_tools2 = _interopRequireDefault(_dom_tools);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var tool = new _dom_tools2.default();
+
+	var Forecast = function () {
+	  function Forecast() {
+	    _classCallCheck(this, Forecast);
+	  }
+
+	  _createClass(Forecast, [{
+	    key: 'getForecast',
+	    value: function getForecast() {
+	      var city = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+
+	      var location = city ? city : tool.byId('navSearch').value;
+	      var obj = {
+	        'verb': 'GET',
+	        'url': 'https://sweater-weather-api-app.herokuapp.com/api/v1/forecasts?location=',
+	        'term': location,
+	        'display': 'forecast'
+	      };
+	      this.makeGetRequest(obj);
+	    }
+	  }, {
+	    key: 'displayForecast',
+	    value: function displayForecast(data) {
+
+	      tool.clearValue(tool.byId('navSearch'));
+
+	      var content = tool.byId('content');
+	      tool.clearHTML(content);
+
+	      var feedback = tool.byId('feedback');
+	      tool.clearHTML(feedback);
+
+	      var info = data['data']['attributes'];
+
+	      var location = info['location'];
+	      var today = info['today'];
+	      var current = info['current'];
+	      var forecast = info['forecast']['data']['attributes'];
+
+	      var showToday = {
+	        'gif': null,
+	        'desc': current['summary'],
+	        'temp': current['temperature'] + '\xB0',
+	        'high': today['high'] + '\xB0',
+	        'low': today['low'] + '\xB0',
+	        'city': location['city']['long_name'],
+	        'state': location['state']['short_name'],
+	        'country': location['country']['long_name'],
+	        'time': current['time']
+	      };
+
+	      var overview = tool.addDiv(content, 'overview', null);
+
+	      this.displayToday(showToday, overview);
+
+	      var showCurrent = {
+	        'gif': null,
+	        'desc': current['summary'],
+	        'today': forecast['hourly'][11]['icon'],
+	        'tonight': forecast['hourly'][22]['icon'],
+	        'feels_like': current['feels_like'] + '\xB0',
+	        'humidity': today['humidity'] * 100 + '%',
+	        'visibility': today['visibility'] + ' miles',
+	        'uv_index': today['uv_index'] + ' ' + (today['uv_index'] <= 5 ? "(low)" : "(high)")
+	      };
+
+	      this.displayCurrent(showCurrent, overview);
+
+	      var showForecast = tool.addDiv(content, 'forecast', null);
+	      this.display7Day(forecast, showForecast);
+	    }
+	  }, {
+	    key: 'display7Day',
+	    value: function display7Day(data, element) {
+	      var title = tool.addDiv(element, 'ForecastTitle', null);
+	      tool.appendText(title, "Forecast");
+
+	      // TO DO - ADD HOURLY
+
+	      var days = data['days'];
+	      days.shift();
+
+	      var l = days.length;
+
+	      for (var i = 0; i < l; i++) {
+
+	        var str = days[i];
+
+	        var date = tool.asDate(days[i]['time']);
+
+	        var day = tool.addDiv(element, 'day' + i, 'forecastDay');
+	        var weekday = tool.addSpan(day, null, 'weekday');
+	        tool.appendText(weekday, tool.asWeekday(date));
+
+	        var icon = tool.addSpan(day, null, 'icon');
+	        var pic = tool.addSpan(icon, 'pic', null);
+	        tool.appendText(pic, "IMG");
+	        var desc = tool.addSpan(icon, 'desc', null);
+	        tool.appendText(desc, str['icon']);
+
+	        var drop = document.createElement('img');
+	        drop.src = 'https://static.thenounproject.com/png/541823-200.png';
+	        drop.id = 'precip';
+	        var precip = tool.addSpan(day, null, 'changeOfRain');
+	        var img = tool.addSpan(precip, 'rain', null);
+	        img.appendChild(drop);
+	        var chance = tool.addSpan(precip, 'chance', null);
+	        tool.appendText(chance, str['precip_probability'] * 100 + '%');
+
+	        var up = document.createElement('img');
+	        up.src = 'http://cdn.onlinewebfonts.com/svg/img_231938.png';
+	        up.id = 'highTemp';
+	        var high = tool.addSpan(day, null, 'temps');
+	        img = tool.addSpan(high, 'high', null);
+	        img.appendChild(up);
+	        var daysHigh = tool.addSpan(high, 'daysHigh', null);
+	        tool.appendText(daysHigh, str['high'] + '\xB0');
+
+	        var down = document.createElement('img');
+	        down.src = 'http://www.cndajin.com/data/wls/26/5484023.png';
+	        down.id = 'highTemp';
+	        var low = tool.addSpan(day, null, 'temps');
+	        img = tool.addSpan(low, 'low', null);
+	        img.appendChild(down);
+	        var daysLow = tool.addSpan(low, 'daysLow', null);
+	        tool.appendText(daysLow, str['low'] + '\xB0');
+	      }
+	    }
+	  }, {
+	    key: 'displayToday',
+	    value: function displayToday(data, element) {
+
+	      var cityState = data['city'] + ', ' + data['state'];
+	      var highLow = "High: " + data['high'] + " Low: " + data['low'];
+
+	      // let showToday = tool.addDiv(element, 'today', 'overview')
+	      var showToday = tool.addSpan(element, 'today', 'overview');
+
+	      var today1 = tool.addSpan(showToday, 'today1_temp', 'today');
+	      var today1_1 = tool.addDiv(today1, 'today1_1', 'today1');
+	      var today1_gif = tool.addSpan(today1_1, 'today1_gif', 'today1_1');
+	      tool.appendText(today1_gif, "IMG"); // TO DO - add gif image
+	      var today1_desc = tool.addSpan(today1_1, 'today1_desc', 'today1_1');
+	      tool.appendText(today1_desc, data['desc']);
+	      var today1_2 = tool.addDiv(today1, 'today1_2', 'today1');
+	      tool.appendText(today1_2, data['temp']);
+	      var today1_3 = tool.addDiv(today1, 'today1_3', 'today1');
+	      tool.appendText(today1_3, highLow);
+
+	      var today2 = tool.addSpan(showToday, 'today2_location', 'today');
+	      var today2_1 = tool.addDiv(today2, 'today2_1', 'today2');
+	      tool.appendText(today2_1, cityState);
+	      var today2_2 = tool.addDiv(today2, 'today2_2', 'today2');
+	      tool.appendText(today2_2, data['country']);
+	      var today2_3 = tool.addDiv(today2, 'today2_3', 'today2');
+	      tool.appendText(today2_3, data['time']);
+
+	      var today3 = tool.addSpan(showToday, 'today2_location', 'today');
+	      var today3_1 = tool.addDiv(today3, 'today3_1', 'today3');
+	      tool.appendText(today3_1, "Change Location");
+	      var today3_2 = tool.addDiv(today3, 'today3_2', 'today3');
+	      tool.appendText(today3_2, "Add to Favorites");
+	    }
+	  }, {
+	    key: 'displayCurrent',
+	    value: function displayCurrent(data, element) {
+
+	      var showCurrent = tool.addSpan(element, 'current', 'overview');
+
+	      var title = tool.addDiv(showCurrent, 'CurrentTitle', null);
+	      tool.appendText(title, "Details");
+
+	      var current = tool.addDiv(showCurrent, 'currentContainer', null);
+
+	      var current1 = tool.addSpan(current, 'current1', 'current');
+	      var current1_1 = tool.addSpan(current1, 'currentGif', null);
+	      tool.appendText(current1_1, "IMG"); // TO DO - add gif image
+
+	      var current1_2 = tool.addSpan(current1, 'currentDesc', null);
+	      tool.appendText(current1_2, data["desc"]);
+
+	      var current1_3 = tool.addSpan(current1, 'currentToday', null);
+	      tool.appendText(current1_3, 'Today: ' + data["today"]);
+
+	      var current1_4 = tool.addSpan(current1, 'currentTonight', null);
+	      tool.appendText(current1_4, 'Tonight: ' + data["tonight"]);
+
+	      var current2 = tool.addSpan(current, 'current2', 'current');
+	      var current2_1 = tool.addDiv(current2, 'current2_1', null);
+	      var current2_1_title = tool.addSpan(current2_1, null, 'currentTitle');
+	      tool.appendText(current2_1_title, "Feels Like");
+	      var current2_1_data = tool.addSpan(current2_1, null, 'currentData');
+	      tool.appendText(current2_1_data, data['feels_like']);
+
+	      var current2_2 = tool.addDiv(current2, 'current2_2', null);
+	      var current2_2_title = tool.addSpan(current2_2, null, 'currentTitle');
+	      tool.appendText(current2_2_title, "Humidity");
+	      var current2_2_data = tool.addSpan(current2_2, null, 'currentData');
+	      tool.appendText(current2_2_data, data['humidity']);
+
+	      var current2_3 = tool.addDiv(current2, 'current2_3', null);
+	      var current2_3_title = tool.addSpan(current2_3, null, 'currentTitle');
+	      tool.appendText(current2_3_title, "Visibility");
+	      var current2_3_data = tool.addSpan(current2_3, null, 'currentData');
+	      tool.appendText(current2_3_data, data['visibility']);
+
+	      var current2_4 = tool.addDiv(current2, 'current2_4', null);
+	      var current2_4_title = tool.addSpan(current2_4, null, 'currentTitle');
+	      tool.appendText(current2_4_title, "UV Index");
+	      var current2_4_data = tool.addSpan(current2_4, null, 'currentData');
+	      tool.appendText(current2_4_data, data['uv_index']);
+	    }
+
+	    // ---- API -----
+
+	  }, {
+	    key: 'makeGetRequest',
+	    value: function makeGetRequest(obj) {
+	      var verb = obj['verb'];
+	      var url = obj['url'];
+	      var term = obj['term'];
+	      var endpoint = url + term;
+
+	      var data;
+	      var req = new XMLHttpRequest();
+	      req.open(verb, endpoint, true);
+	      req.onload = function () {
+	        var stat = this.status;
+	        var valid = stat >= 200 && stat < 300;
+	        if (valid) {
+	          data = JSON.parse(this.responseText);
+	          // I tried lots of things to get a callback to work, and nothing did..
+	          // so this feels terrible, but it works...
+	          var forecast = new Forecast();
+	          forecast.assessDisplay(data, obj['display']);
+	        } else {
+	          this.badLocation();
+	        }
+	      };
+	      req.send();
+	    }
+	  }, {
+	    key: 'badLocation',
+	    value: function badLocation() {
+	      var feedback = tool.byId('feedback');
+	      tool.clearHTML(feedback);
+	      var msg = "Sorry, that location does not exist. Check spelling or try another location.";
+	      tool.appendText(feedback, msg);
+	      // TO DO - grab all location search bars & clear them
+	    }
+	  }, {
+	    key: 'assessDisplay',
+	    value: function assessDisplay(data, display) {
+	      if (display == 'forecast') {
+	        this.displayForecast(data);
+	      }
+	      // else if (display == 'favorites') { displayFavorites(data) }
+	    }
+	  }]);
+
+	  return Forecast;
+	}();
+
+	exports.default = Forecast;
 
 /***/ })
 /******/ ]);
