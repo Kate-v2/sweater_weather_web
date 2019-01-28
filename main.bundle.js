@@ -92,7 +92,7 @@
 	function emailField(form) {
 	  var email = tool.addDiv(form, 'email', 'row');
 	  var title = tool.addSpan(email, null, 'title');
-	  appendText(title, "Email");
+	  tool.appendText(title, "Email");
 	  var field = tool.addSpan(email, 'email', 'field');
 	  field.appendChild(makeInput('text', 'emailField', null));
 	}
@@ -100,7 +100,7 @@
 	function passwordField(form) {
 	  var password = tool.addDiv(form, 'password', 'row');
 	  var title = tool.addSpan(password, null, 'title');
-	  appendText(title, "Password");
+	  tool.appendText(title, "Password");
 	  var field = tool.addSpan(password, 'password', 'field');
 	  field.appendChild(makeInput('password', 'passwordField', null));
 	}
@@ -108,7 +108,7 @@
 	function passwordFieldConfirmation(form) {
 	  var confirm = tool.addDiv(form, 'confrim', 'row');
 	  var title = tool.addSpan(confirm, null, 'title');
-	  appendText(title, "Confirm Password");
+	  tool.appendText(title, "Confirm Password");
 	  var field = tool.addSpan(confirm, 'confirm', 'field');
 	  field.appendChild(makeInput('password', 'confirmField', null));
 	}
@@ -156,7 +156,7 @@
 	  var feedback = tool.byId('feedback');
 	  tool.clearHTML(feedback);
 	  var msg = "Sorry, something went wrong.";
-	  appendText(feedback, msg);
+	  tool.appendText(feedback, msg);
 	}
 
 	function assessPost(data, display) {
@@ -177,7 +177,7 @@
 	  var feedback = tool.byId('feedback');
 	  tool.clearHTML(feedback);
 	  var msg = "You're now logged in, please explore and add favorite locations!";
-	  appendText(feedback, msg);
+	  tool.appendText(feedback, msg);
 	  var content = tool.byId('content');
 	  tool.clearHTML(content);
 	}
@@ -253,9 +253,9 @@
 	  var showToday = {
 	    'gif': null,
 	    'desc': current['summary'],
-	    'temp': current['temperature'],
-	    'high': today['high'],
-	    'low': today['low'],
+	    'temp': current['temperature'] + '\xB0',
+	    'high': today['high'] + '\xB0',
+	    'low': today['low'] + '\xB0',
 	    'city': location['city']['long_name'],
 	    'state': location['state']['short_name'],
 	    'country': location['country']['long_name'],
@@ -266,6 +266,21 @@
 	  };var overview = tool.addDiv(content, 'overview', null);
 
 	  displayToday(showToday, overview);
+
+	  debugger;
+
+	  var showCurrent = {
+	    'gif': null,
+	    'desc': current['summary'],
+	    'today': forecast['hourly'][11]['icon'],
+	    'tonight': forecast['hourly'][22]['icon'],
+	    'feels_like': current['feels_like'] + '\xB0',
+	    'humidity': today['humidity'] * 100 + '%',
+	    'visibility': today['visibility'] + ' miles',
+	    'uv_index': today['uv_index'] + ' ' + (today['uv_index'] <= 5 ? "(low)" : "(high)")
+	  };
+
+	  displayCurrent(showCurrent, overview);
 	}
 
 	function displayToday(data, element) {
@@ -273,32 +288,83 @@
 	  var cityState = data['city'] + ', ' + data['state'];
 	  var highLow = "High: " + data['high'] + " Low: " + data['low'];
 
-	  var showToday = tool.addDiv(element, 'today', 'overview');
+	  // let showToday = tool.addDiv(element, 'today', 'overview')
+	  var showToday = tool.addSpan(element, 'today', 'overview');
 
 	  var today1 = tool.addSpan(showToday, 'today1_temp', 'today');
 	  var today1_1 = tool.addDiv(today1, 'today1_1', 'today1');
 	  var today1_gif = tool.addSpan(today1_1, 'today1_gif', 'today1_1');
-	  appendText(today1_gif, "IMG"); // TO DO - add gif image
+	  tool.appendText(today1_gif, "IMG"); // TO DO - add gif image
 	  var today1_desc = tool.addSpan(today1_1, 'today1_desc', 'today1_1');
-	  appendText(today1_desc, data['desc']);
+	  tool.appendText(today1_desc, data['desc']);
 	  var today1_2 = tool.addDiv(today1, 'today1_2', 'today1');
-	  appendText(today1_2, data['temp']);
+	  tool.appendText(today1_2, data['temp']);
 	  var today1_3 = tool.addDiv(today1, 'today1_3', 'today1');
-	  appendText(today1_3, highLow);
+	  tool.appendText(today1_3, highLow);
 
 	  var today2 = tool.addSpan(showToday, 'today2_location', 'today');
 	  var today2_1 = tool.addDiv(today2, 'today2_1', 'today2');
-	  appendText(today2_1, cityState);
+	  tool.appendText(today2_1, cityState);
 	  var today2_2 = tool.addDiv(today2, 'today2_2', 'today2');
-	  appendText(today2_2, data['country']);
+	  tool.appendText(today2_2, data['country']);
 	  var today2_3 = tool.addDiv(today2, 'today2_3', 'today2');
-	  appendText(today2_3, data['time']);
+	  tool.appendText(today2_3, data['time']);
 
 	  var today3 = tool.addSpan(showToday, 'today2_location', 'today');
 	  var today3_1 = tool.addDiv(today3, 'today3_1', 'today3');
-	  appendText(today3_1, "Change Location");
+	  tool.appendText(today3_1, "Change Location");
 	  var today3_2 = tool.addDiv(today3, 'today3_2', 'today3');
-	  appendText(today3_2, "Add to Favorites");
+	  tool.appendText(today3_2, "Add to Favorites");
+	}
+
+	function displayCurrent(data, element) {
+
+	  debugger;
+
+	  var showCurrent = tool.addSpan(element, 'current', 'overview');
+
+	  var title = tool.addDiv(showCurrent, 'CurrentTitle', null);
+	  tool.appendText(title, "Details");
+
+	  var current = tool.addDiv(showCurrent, 'currentContainer', null);
+
+	  var current1 = tool.addSpan(current, 'current1', 'current');
+	  var current1_1 = tool.addSpan(current1, 'currentGif', null);
+	  tool.appendText(current1_1, "IMG"); // TO DO - add gif image
+
+	  var current1_2 = tool.addSpan(current1, 'currentDesc', null);
+	  tool.appendText(current1_2, data["desc"]);
+
+	  var current1_3 = tool.addSpan(current1, 'currentToday', null);
+	  tool.appendText(current1_3, 'Today: ' + data["today"]);
+
+	  var current1_4 = tool.addSpan(current1, 'currentTonight', null);
+	  tool.appendText(current1_4, 'Tonight: ' + data["tonight"]);
+
+	  var current2 = tool.addSpan(current, 'current2', 'current');
+	  var current2_1 = tool.addDiv(current2, 'current2_1', null);
+	  var current2_1_title = tool.addSpan(current2_1, null, 'currentTitle');
+	  tool.appendText(current2_1_title, "Feels Like");
+	  var current2_1_data = tool.addSpan(current2_1, null, 'currentData');
+	  tool.appendText(current2_1_data, data['feels_like']);
+
+	  var current2_2 = tool.addDiv(current2, 'current2_2', null);
+	  var current2_2_title = tool.addSpan(current2_2, null, 'currentTitle');
+	  tool.appendText(current2_2_title, "Humidity");
+	  var current2_2_data = tool.addSpan(current2_2, null, 'currentData');
+	  tool.appendText(current2_2_data, data['humidity']);
+
+	  var current2_3 = tool.addDiv(current2, 'current2_3', null);
+	  var current2_3_title = tool.addSpan(current2_3, null, 'currentTitle');
+	  tool.appendText(current2_3_title, "Visibility");
+	  var current2_3_data = tool.addSpan(current2_3, null, 'currentData');
+	  tool.appendText(current2_3_data, data['visibility']);
+
+	  var current2_4 = tool.addDiv(current2, 'current2_4', null);
+	  var current2_4_title = tool.addSpan(current2_4, null, 'currentTitle');
+	  tool.appendText(current2_4_title, "UV Index");
+	  var current2_4_data = tool.addSpan(current2_4, null, 'currentData');
+	  tool.appendText(current2_4_data, data['uv_index']);
 	}
 
 	// ---- API -----
@@ -329,7 +395,7 @@
 	  var feedback = tool.byId('feedback');
 	  tool.clearHTML(feedback);
 	  var msg = "Sorry, that location does not exist. Check spelling or try another location.";
-	  appendText(feedback, msg);
+	  tool.appendText(feedback, msg);
 	  // TO DO - grab all location search bars & clear them
 	}
 
@@ -407,14 +473,14 @@
 	function makeNavButton(id, text) {
 	  var button = navSpan();
 	  button.id = id;
-	  appendText(button, text);
+	  tool.appendText(button, text);
 	  return button;
 	}
 
-	function appendText(element, text) {
-	  var node = document.createTextNode(text);
-	  element.appendChild(node);
-	}
+	// function appendText(element, text) {
+	//   let node = document.createTextNode(text)
+	//   element.appendChild(node)
+	// }
 
 	function navSpan() {
 	  var navSpan = document.createElement("span");
@@ -503,6 +569,12 @@
 	      }
 	      element.appendChild(span);
 	      return span;
+	    }
+	  }, {
+	    key: 'appendText',
+	    value: function appendText(element, text) {
+	      var node = document.createTextNode(text);
+	      element.appendChild(node);
 	    }
 	  }]);
 
