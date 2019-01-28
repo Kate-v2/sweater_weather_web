@@ -79,25 +79,25 @@
 
 	  // TO DO - break email, password, submit into functions to be reused with login
 
-	  var email = addDiv(form, 'email', 'row');
+	  var email = tool.addDiv(form, 'email', 'row');
 	  var title = addSpan(email, null, 'title');
 	  appendText(title, "Email");
 	  var field = addSpan(email, 'email', 'field');
 	  field.appendChild(makeInput('text', 'emailField', null));
 
-	  var password = addDiv(form, 'password', 'row');
+	  var password = tool.addDiv(form, 'password', 'row');
 	  title = addSpan(password, null, 'title');
 	  appendText(title, "Password");
 	  field = addSpan(password, 'password', 'field');
 	  field.appendChild(makeInput('password', 'passwordField', null));
 
-	  var confirm = addDiv(form, 'confrim', 'row');
+	  var confirm = tool.addDiv(form, 'confrim', 'row');
 	  title = addSpan(confirm, null, 'title');
 	  appendText(title, "Confirm Password");
 	  field = addSpan(confirm, 'confirm', 'field');
 	  field.appendChild(makeInput('password', 'confirmField', null));
 
-	  var submit = addDiv(form, 'submit', 'row');
+	  var submit = tool.addDiv(form, 'submit', 'row');
 	  addRegisterSubmit(submit);
 	}
 
@@ -181,19 +181,19 @@
 	  tool.clearHTML(content);
 
 	  var form = addSpan(content, 'loginFrom', null);
-	  var email = addDiv(form, 'email', 'row');
+	  var email = tool.addDiv(form, 'email', 'row');
 	  var title = addSpan(email, null, 'title');
 	  appendText(title, "Email");
 	  var field = addSpan(email, 'email', 'field');
 	  field.appendChild(makeInput('text', 'emailField', null));
 
-	  var password = addDiv(form, 'password', 'row');
+	  var password = tool.addDiv(form, 'password', 'row');
 	  title = addSpan(password, null, 'title');
 	  appendText(title, "Password");
 	  field = addSpan(password, 'password', 'field');
 	  field.appendChild(makeInput('password', 'passwordField', null));
 
-	  var submit = addDiv(form, 'submit', 'row');
+	  var submit = tool.addDiv(form, 'submit', 'row');
 	  addLoginSubmit(submit);
 	}
 
@@ -250,7 +250,7 @@
 
 	  var content = tool.byId('content');
 
-	  var overview = addDiv(content, 'overview', null);
+	  var overview = tool.addDiv(content, 'overview', null);
 
 	  displayToday(showToday, overview);
 	}
@@ -260,31 +260,31 @@
 	  var cityState = data['city'] + ', ' + data['state'];
 	  var highLow = "High: " + data['high'] + " Low: " + data['low'];
 
-	  var showToday = addDiv(element, 'today', 'overview');
+	  var showToday = tool.addDiv(element, 'today', 'overview');
 
 	  var today1 = addSpan(showToday, 'today1_temp', 'today');
-	  var today1_1 = addDiv(today1, 'today1_1', 'today1');
+	  var today1_1 = tool.addDiv(today1, 'today1_1', 'today1');
 	  var today1_gif = addSpan(today1_1, 'today1_gif', 'today1_1');
 	  appendText(today1_gif, "IMG"); // TO DO - add gif image
 	  var today1_desc = addSpan(today1_1, 'today1_desc', 'today1_1');
 	  appendText(today1_desc, data['desc']);
-	  var today1_2 = addDiv(today1, 'today1_2', 'today1');
+	  var today1_2 = tool.addDiv(today1, 'today1_2', 'today1');
 	  appendText(today1_2, data['temp']);
-	  var today1_3 = addDiv(today1, 'today1_3', 'today1');
+	  var today1_3 = tool.addDiv(today1, 'today1_3', 'today1');
 	  appendText(today1_3, highLow);
 
 	  var today2 = addSpan(showToday, 'today2_location', 'today');
-	  var today2_1 = addDiv(today2, 'today2_1', 'today2');
+	  var today2_1 = tool.addDiv(today2, 'today2_1', 'today2');
 	  appendText(today2_1, cityState);
-	  var today2_2 = addDiv(today2, 'today2_2', 'today2');
+	  var today2_2 = tool.addDiv(today2, 'today2_2', 'today2');
 	  appendText(today2_2, data['country']);
-	  var today2_3 = addDiv(today2, 'today2_3', 'today2');
+	  var today2_3 = tool.addDiv(today2, 'today2_3', 'today2');
 	  appendText(today2_3, data['time']);
 
 	  var today3 = addSpan(showToday, 'today2_location', 'today');
-	  var today3_1 = addDiv(today3, 'today3_1', 'today3');
+	  var today3_1 = tool.addDiv(today3, 'today3_1', 'today3');
 	  appendText(today3_1, "Change Location");
-	  var today3_2 = addDiv(today3, 'today3_2', 'today3');
+	  var today3_2 = tool.addDiv(today3, 'today3_2', 'today3');
 	  appendText(today3_2, "Add to Favorites");
 	}
 
@@ -391,20 +391,6 @@
 
 	// ---- General HTML Elements ----
 
-	function addDiv(element) {
-	  var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-	  var className = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-	  var div = document.createElement('div');
-	  if (id) {
-	    div.id = id;
-	  }
-	  if (className) {
-	    div.className = className;
-	  }
-	  element.appendChild(div);
-	  return div;
-	}
 
 	function addSpan(element) {
 	  var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
